@@ -25675,6 +25675,18 @@ ion-navbar.toolbar {
 }
 
 #map {
-  height: 1080px;
-  width: 500px;
+  height: 400px;
+  width: 100%;
+}
+
+.container {
+  margin: 50% auto;
+  text-align: center;
+}
+
+.button-md {
+  font-size: 34px;
+  height: 80px;
+  padding: 10px;
+  width: 300px;
 }

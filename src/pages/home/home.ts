@@ -18,7 +18,7 @@ export class HomePage {
   }
   ionViewDidEnter() {
     this.loadmap();
- 
+
   }
   loadmap() {
     this.map = leaflet.map('map').setView([51.505, -0.09], 13);
@@ -28,20 +28,23 @@ export class HomePage {
       id: 'mapbox.streets',
       accessToken: 'pk.eyJ1Ijoicmlja2NhcmRkZGQiLCJhIjoiY2puYWd5YmFjMHhpOTNrcDY0c3p4eGs3dyJ9.2QR4wWu81nM2RjFw94OhNg'
     }).addTo(this.map);
-  this.map.locate({
-    setView: true,
-    maxZoom: 10
-  }).on('locationfound', (e) =>{
-    let radius = e.accuracy / 2;
-    this.marker = leaflet.marker([e.latitude, e.longitude]).addTo(this.map)
-    .bindPopup('Jestes w okolicy '+ radius + ' metrow od tego punktu').openPopup();
-    leaflet.circle(e.latlng, radius).addTo(this.map);
-    console.log('Jestes teraz tutaj');
-  })
+    this.map.locate({
+      setView: true,
+      maxZoom: 10
+    }).on('locationfound', (e) => {
+      let radius = e.accuracy / 2;
+      this.marker = leaflet.marker([e.latitude, e.longitude]).addTo(this.map)
+        .bindPopup('Jestes w okolicy ' + radius + ' metrow od tego punktu').openPopup();
+      leaflet.circle(e.latlng, radius).addTo(this.map);
+      console.log('Jestes teraz tutaj');
+    })
 
-  
+
   }
-  
- 
+  BackToStart(){
+    this.navCtrl.pop();
+  }
+
+
 
 }
