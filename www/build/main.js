@@ -64,7 +64,7 @@ var StartMenuComponent = /** @class */ (function () {
     };
     StartMenuComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'app-start',template:/*ion-inline-start:"C:\Users\Ja\Dysk Google\Aplikacje Mobilne\myApp\src\pages\startmenu\startMenu.html"*/'<div class="container">\n\n    <button (click)="GoToCreateGame()" ion-button icon-start>\n\n        <ion-icon name=\'home\' ></ion-icon>\n\n        Stworz gre\n\n      </button>\n\n      <button ion-button outline icon-start>\n\n        <ion-icon name=\'briefcase\' is-active="false"></ion-icon>\n\n        Wczytaj gre\n\n      </button>\n\n</div>'/*ion-inline-end:"C:\Users\Ja\Dysk Google\Aplikacje Mobilne\myApp\src\pages\startmenu\startMenu.html"*/,
+            selector: 'app-start',template:/*ion-inline-start:"C:\Users\Ja\Dysk Google\Aplikacje Mobilne\myApp\src\pages\startmenu\startMenu.html"*/'<div class="container">\n    <button (click)="GoToCreateGame()" ion-button icon-start>\n        <ion-icon name=\'home\' ></ion-icon>\n        Stworz gre\n      </button>\n      <button ion-button outline icon-start>\n        <ion-icon name=\'briefcase\' is-active="false"></ion-icon>\n        Wczytaj gre\n      </button>\n</div>'/*ion-inline-end:"C:\Users\Ja\Dysk Google\Aplikacje Mobilne\myApp\src\pages\startmenu\startMenu.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* NavController */]])
     ], StartMenuComponent);
@@ -105,39 +105,41 @@ var HomePage = /** @class */ (function () {
     };
     HomePage.prototype.loadmap = function () {
         var _this = this;
-        this.map = __WEBPACK_IMPORTED_MODULE_2_leaflet___default.a.map('map').setView([51.505, -0.09], 13);
-        __WEBPACK_IMPORTED_MODULE_2_leaflet___default.a.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-            maxZoom: 30,
-            id: 'mapbox.streets',
-            accessToken: 'pk.eyJ1Ijoicmlja2NhcmRkZGQiLCJhIjoiY2puYWd5YmFjMHhpOTNrcDY0c3p4eGs3dyJ9.2QR4wWu81nM2RjFw94OhNg'
-        }).addTo(this.map);
+        this.openmap = __WEBPACK_IMPORTED_MODULE_2_leaflet___default.a.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+            maxZoom: 30
+        });
+        this.map = __WEBPACK_IMPORTED_MODULE_2_leaflet___default.a.map('map').setView([51.505, -0.09], 13).addLayer(this.openmap);
         this.map.locate({
             setView: true,
             maxZoom: 10
         }).on('locationfound', function (e) {
             var radius = e.accuracy / 2;
-            _this.marker = __WEBPACK_IMPORTED_MODULE_2_leaflet___default.a.marker([e.latitude, e.longitude]).addTo(_this.map)
+            var marker = __WEBPACK_IMPORTED_MODULE_2_leaflet___default.a.marker([e.latitude, e.longitude]).addTo(_this.map)
                 .bindPopup('Jestes w okolicy ' + radius + ' metrow od tego punktu').openPopup();
             __WEBPACK_IMPORTED_MODULE_2_leaflet___default.a.circle(e.latlng, radius).addTo(_this.map);
             console.log('Jestes teraz tutaj');
         });
+        this.map.on('click', this.AddMarker.bind(this));
+        //this.openmap.on('click', this.onMapClick);
     };
     HomePage.prototype.BackToStart = function () {
         this.navCtrl.pop();
     };
+    HomePage.prototype.AddMarker = function (e) {
+        var marker = __WEBPACK_IMPORTED_MODULE_2_leaflet___default.a.marker([e.latlng.lat, e.latlng.lng]).addTo(this.map);
+    };
     __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_8" /* ViewChild */])('map'),
-        __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["t" /* ElementRef */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["t" /* ElementRef */]) === "function" && _a || Object)
+        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["t" /* ElementRef */])
     ], HomePage.prototype, "mapContainer", void 0);
     HomePage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'page-home',template:/*ion-inline-start:"C:\Users\Ja\Dysk Google\Aplikacje Mobilne\myApp\src\pages\home\home.html"*/'<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Stworz gre</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n  <h3>Ionic Menu Starter</h3>\n\n  <p>\n    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will show you the way.\n  </p>\n  <p>Koordynaty markera {{position}}</p>\n  <div id="map">aa</div>\n  <button (click)="BackToStart()">Toggle Menu</button>\n</ion-content>\n'/*ion-inline-end:"C:\Users\Ja\Dysk Google\Aplikacje Mobilne\myApp\src\pages\home\home.html"*/
         }),
-        __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* NavController */]) === "function" && _b || Object])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* NavController */]])
     ], HomePage);
     return HomePage;
-    var _a, _b;
 }());
 
 //# sourceMappingURL=home.js.map
@@ -258,10 +260,9 @@ var MyApp = /** @class */ (function () {
     MyApp = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({template:/*ion-inline-start:"C:\Users\Ja\Dysk Google\Aplikacje Mobilne\myApp\src\app\app.html"*/'<ion-nav [root]="rootPage"></ion-nav>'/*ion-inline-end:"C:\Users\Ja\Dysk Google\Aplikacje Mobilne\myApp\src\app\app.html"*/
         }),
-        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* Platform */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* Platform */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */]) === "function" && _c || Object])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* Platform */], __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */], __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */]])
     ], MyApp);
     return MyApp;
-    var _a, _b, _c;
 }());
 
 //# sourceMappingURL=app.component.js.map
