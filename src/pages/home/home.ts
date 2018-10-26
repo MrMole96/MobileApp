@@ -10,8 +10,10 @@ export class HomePage {
   @ViewChild('map') mapContainer: ElementRef;
   openmap: any;
   map: any;
-  position: any;
-
+  FirstPosition: any;
+  SecondPosition: any;
+  PathArray: any[];
+  polyline: any;
   constructor(public navCtrl: NavController) {
 
   }
@@ -30,20 +32,29 @@ export class HomePage {
       maxZoom: 10
     }).on('locationfound', (e) => {
       let radius = e.accuracy / 2;
-    let marker = L.marker([e.latitude, e.longitude]).addTo(this.map)
+      let marker = L.marker([e.latitude, e.longitude]).addTo(this.map)
         .bindPopup('Jestes w okolicy ' + radius + ' metrow od tego punktu').openPopup();
       L.circle(e.latlng, radius).addTo(this.map);
       console.log('Jestes teraz tutaj');
+       this.polyline = new L.Polyline([]).addTo(this.map);
     })
     this.map.on('click', this.AddMarker.bind(this));
     //this.openmap.on('click', this.onMapClick);
   }
+  AddMarker(e) {
+    this.FirstPosition = [e.latlng.lat, e.latlng.lng];
+    console.log(this.FirstPosition);
+    let marker = L.marker([e.latlng.lat, e.latlng.lng]).addTo(this.map);
+    this.AddLineOfPath(e);
+   
+  }
+AddLineOfPath(e){
+  this.polyline.addLatLng(e.latlng);
+}
   BackToStart() {
     this.navCtrl.pop();
   }
-  AddMarker(e) {
-    let marker = L.marker([e.latlng.lat, e.latlng.lng]).addTo(this.map);
-  }
+
 
 
 }

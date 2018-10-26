@@ -13,7 +13,8 @@ import { StartMenuComponent } from '../pages/startmenu/startMenu';
   declarations: [
     MyApp,
     HomePage,
-    StartMenuComponent
+    StartMenuComponent,
+   
   ],
   imports: [
     BrowserModule,
@@ -24,7 +25,8 @@ import { StartMenuComponent } from '../pages/startmenu/startMenu';
   entryComponents: [
     MyApp,
     HomePage,
-    StartMenuComponent
+    StartMenuComponent,
+
   ],
   providers: [
     StatusBar,

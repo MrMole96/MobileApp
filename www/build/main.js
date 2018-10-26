@@ -119,15 +119,22 @@ var HomePage = /** @class */ (function () {
                 .bindPopup('Jestes w okolicy ' + radius + ' metrow od tego punktu').openPopup();
             __WEBPACK_IMPORTED_MODULE_2_leaflet___default.a.circle(e.latlng, radius).addTo(_this.map);
             console.log('Jestes teraz tutaj');
+            _this.polyline = new __WEBPACK_IMPORTED_MODULE_2_leaflet___default.a.Polyline([]).addTo(_this.map);
         });
         this.map.on('click', this.AddMarker.bind(this));
         //this.openmap.on('click', this.onMapClick);
     };
+    HomePage.prototype.AddMarker = function (e) {
+        this.FirstPosition = [e.latlng.lat, e.latlng.lng];
+        console.log(this.FirstPosition);
+        var marker = __WEBPACK_IMPORTED_MODULE_2_leaflet___default.a.marker([e.latlng.lat, e.latlng.lng]).addTo(this.map);
+        this.AddLineOfPath(e);
+    };
+    HomePage.prototype.AddLineOfPath = function (e) {
+        this.polyline.addLatLng(e.latlng);
+    };
     HomePage.prototype.BackToStart = function () {
         this.navCtrl.pop();
-    };
-    HomePage.prototype.AddMarker = function (e) {
-        var marker = __WEBPACK_IMPORTED_MODULE_2_leaflet___default.a.marker([e.latlng.lat, e.latlng.lng]).addTo(this.map);
     };
     __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_8" /* ViewChild */])('map'),
@@ -135,7 +142,7 @@ var HomePage = /** @class */ (function () {
     ], HomePage.prototype, "mapContainer", void 0);
     HomePage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-home',template:/*ion-inline-start:"C:\Users\Ja\Dysk Google\Aplikacje Mobilne\myApp\src\pages\home\home.html"*/'<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Stworz gre</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n  <h3>Ionic Menu Starter</h3>\n\n  <p>\n    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will show you the way.\n  </p>\n  <p>Koordynaty markera {{position}}</p>\n  <div id="map">aa</div>\n  <button (click)="BackToStart()">Toggle Menu</button>\n</ion-content>\n'/*ion-inline-end:"C:\Users\Ja\Dysk Google\Aplikacje Mobilne\myApp\src\pages\home\home.html"*/
+            selector: 'page-home',template:/*ion-inline-start:"C:\Users\Ja\Dysk Google\Aplikacje Mobilne\myApp\src\pages\home\home.html"*/'<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Stworz gre</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n  <h3>Ionic Menu Starter</h3>\n\n  <p>\n    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will show you the way.\n  </p>\n  <p>Koordynaty markera {{position}}</p>\n  <div id="map"></div>\n  <button (click)="BackToStart()">Toggle Menu</button>\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\Ja\Dysk Google\Aplikacje Mobilne\myApp\src\pages\home\home.html"*/
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* NavController */]])
     ], HomePage);
@@ -195,7 +202,7 @@ var AppModule = /** @class */ (function () {
             declarations: [
                 __WEBPACK_IMPORTED_MODULE_3__app_component__["a" /* MyApp */],
                 __WEBPACK_IMPORTED_MODULE_4__pages_home_home__["a" /* HomePage */],
-                __WEBPACK_IMPORTED_MODULE_7__pages_startmenu_startMenu__["a" /* StartMenuComponent */]
+                __WEBPACK_IMPORTED_MODULE_7__pages_startmenu_startMenu__["a" /* StartMenuComponent */],
             ],
             imports: [
                 __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */],
@@ -207,7 +214,7 @@ var AppModule = /** @class */ (function () {
             entryComponents: [
                 __WEBPACK_IMPORTED_MODULE_3__app_component__["a" /* MyApp */],
                 __WEBPACK_IMPORTED_MODULE_4__pages_home_home__["a" /* HomePage */],
-                __WEBPACK_IMPORTED_MODULE_7__pages_startmenu_startMenu__["a" /* StartMenuComponent */]
+                __WEBPACK_IMPORTED_MODULE_7__pages_startmenu_startMenu__["a" /* StartMenuComponent */],
             ],
             providers: [
                 __WEBPACK_IMPORTED_MODULE_5__ionic_native_status_bar__["a" /* StatusBar */],
