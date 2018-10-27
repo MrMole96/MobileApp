@@ -1,5 +1,6 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { NavController } from 'ionic-angular';
+import { HttpClient } from '@angular/common/http';
 import L from 'leaflet';
 
 @Component({
@@ -16,7 +17,7 @@ export class HomePage {
   polyline: any;
   distanceInt: number = 0;
   distanceString: string = "0";
-  constructor(public navCtrl: NavController) {
+  constructor(public navCtrl: NavController, public http: HttpClient) {
 
   }
   ionViewDidEnter() {
@@ -53,16 +54,18 @@ export class HomePage {
   }
   AddLineOfPath(e) {
     this.polyline.addLatLng(e.latlng);
-    let cos = this.polyline.getLatLngs()
-    let i = cos.length;
-    console.log(cos.length);//lenght of array with markers position
-    console.log(cos);
-   // console.log(cos[0].lat);
-    if (cos.length != 1) {
-      console.log(cos[i-2].lat);
-      console.log(cos[i-1].lat);
-      this.distanceInt += this.GetDistanceOfTwoLastMarkers(cos[i - 2].lat, cos[i - 2].lng, cos[i-1].lat, cos[i-1].lng)
-this.distanceString = (this.distanceInt).toFixed(2);
+    let markerPosition = this.polyline.getLatLngs()
+    let lenght = markerPosition.length;
+    console.log(markerPosition.length);//lenght of array with markers position
+    console.log(markerPosition);
+    // console.log(cos[0].lat);
+    if (markerPosition.length != 1) {
+      console.log(markerPosition[lenght - 2].lat);
+      console.log(markerPosition[lenght - 1].lat);
+      this.distanceInt += this.GetDistanceOfTwoLastMarkers(
+        markerPosition[lenght - 2].lat, markerPosition[lenght - 2].lng,
+        markerPosition[lenght - 1].lat, markerPosition[lenght - 1].lng)
+      this.distanceString = (this.distanceInt).toFixed(2);
       //console.log(this.distance);
     }
 
@@ -78,13 +81,24 @@ this.distanceString = (this.distanceInt).toFixed(2);
       ;
     var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     var d = R * c; // Distance in km
-  
+
     return d;
   }
   deg2rad(deg) {
     return deg * (Math.PI / 180)
   }
 
+
+  SendPath() {
+    this.http.post('http://127.0.0.1:3456/', {
+      info: 'sent request',
+      totalDistance: this.distanceString
+
+    }, { responseType: 'text' }).subscribe(res => {
+      console.log(JSON.stringify(res));
+    });
+
+  }
   BackToStart() {
     this.navCtrl.pop();
   }

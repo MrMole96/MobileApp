@@ -8,7 +8,7 @@ import { HomePage } from '../pages/home/home';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StartMenuComponent } from '../pages/startmenu/startMenu';
-
+import { HttpClientModule } from '@angular/common/http';
 @NgModule({
   declarations: [
     MyApp,
@@ -18,6 +18,7 @@ import { StartMenuComponent } from '../pages/startmenu/startMenu';
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     IonicModule.forRoot(MyApp),
  
   ],
@@ -26,6 +27,7 @@ import { StartMenuComponent } from '../pages/startmenu/startMenu';
     MyApp,
     HomePage,
     StartMenuComponent,
+  
 
   ],
   providers: [
