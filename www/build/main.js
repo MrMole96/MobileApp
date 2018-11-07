@@ -64,7 +64,7 @@ var StartMenuComponent = /** @class */ (function () {
     };
     StartMenuComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'app-start',template:/*ion-inline-start:"C:\Users\Ja\Desktop\Test\mapbox\myApp\src\pages\startmenu\startMenu.html"*/'<div class="container">\n    <button (click)="GoToCreateGame()" ion-button icon-start>\n        <ion-icon name=\'home\' ></ion-icon>\n        Stworz gre\n      </button>\n      <button ion-button outline icon-start>\n        <ion-icon name=\'briefcase\' is-active="false"></ion-icon>\n        Wczytaj gre\n      </button>\n</div>'/*ion-inline-end:"C:\Users\Ja\Desktop\Test\mapbox\myApp\src\pages\startmenu\startMenu.html"*/,
+            selector: 'app-start',template:/*ion-inline-start:"C:\Users\Ja\Dysk Google\Aplikacje Mobilne\mapbox\myApp\src\pages\startmenu\startMenu.html"*/'<div class="container">\n    <button (click)="GoToCreateGame()" ion-button icon-start>\n        <ion-icon name=\'home\' ></ion-icon>\n        Stworz gre\n      </button>\n      <button ion-button outline icon-start>\n        <ion-icon name=\'briefcase\' is-active="false"></ion-icon>\n        Wczytaj gre\n      </button>\n</div>'/*ion-inline-end:"C:\Users\Ja\Dysk Google\Aplikacje Mobilne\mapbox\myApp\src\pages\startmenu\startMenu.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* NavController */]])
     ], StartMenuComponent);
@@ -285,6 +285,7 @@ var HomePage = /** @class */ (function () {
                     }
                 }
             });
+            _this.distance = data.routes[0].distance;
             // this is where the JavaScript from the next step will go
             console.log("dystans " + data.routes[0].distance);
         });
@@ -324,6 +325,14 @@ var HomePage = /** @class */ (function () {
         console.log('aa');
     };
     HomePage.prototype.SendPath = function () {
+        console.log('wysylanie');
+        this.http.post('http://127.0.0.1:3456/', {
+            info: 'sent request',
+            totalDistance: this.distance,
+            MarkersPath: this.markersPath.map(function (x) { return x.getLngLat(); })
+        }, { responseType: 'text' }).subscribe(function (res) {
+            console.log(JSON.stringify(res));
+        });
     };
     __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_8" /* ViewChild */])('map'),
@@ -331,7 +340,7 @@ var HomePage = /** @class */ (function () {
     ], HomePage.prototype, "mapContainer", void 0);
     HomePage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-home',template:/*ion-inline-start:"C:\Users\Ja\Desktop\Test\mapbox\myApp\src\pages\home\home.html"*/'<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Stworz gre</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n  <h3>Ionic Menu Starter</h3>\n\n  <p>\n    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will show you the way.\n  </p>\n\n  <h4>Ogolny dystans trasy to około {{distanceString}}</h4>\n  <div id="map" ></div>\n\n\n  <button (click)="SendPath()">Wyślij</button>\n  <button (click)="BackToStart()">Toggle Menu</button>\n  <button (click)="RemoveNav()">Clear Map</button>\n  <button (click)="ClearMap()">Clear Map</button>\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\Ja\Desktop\Test\mapbox\myApp\src\pages\home\home.html"*/,
+            selector: 'page-home',template:/*ion-inline-start:"C:\Users\Ja\Dysk Google\Aplikacje Mobilne\mapbox\myApp\src\pages\home\home.html"*/'<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Stworz gre</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n  <h3>Ionic Menu Starter</h3>\n\n  <p>\n    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will show you the way.\n  </p>\n\n  <h4>Ogolny dystans trasy to około {{distanceString}}</h4>\n  <div id="map" ></div>\n\n\n  <button (click)="SendPath()">Wyślij</button>\n  <button (click)="BackToStart()">Toggle Menu</button>\n  <button (click)="RemoveNav()">Clear Map</button>\n  <button (click)="ClearMap()">Clear Map</button>\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\Ja\Dysk Google\Aplikacje Mobilne\mapbox\myApp\src\pages\home\home.html"*/,
         }),
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])(),
         __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* NavController */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__angular_common_http__["a" /* HttpClient */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_common_http__["a" /* HttpClient */]) === "function" && _c || Object])
@@ -460,7 +469,7 @@ var MyApp = /** @class */ (function () {
         });
     }
     MyApp = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({template:/*ion-inline-start:"C:\Users\Ja\Desktop\Test\mapbox\myApp\src\app\app.html"*/'<ion-nav [root]="rootPage"></ion-nav>'/*ion-inline-end:"C:\Users\Ja\Desktop\Test\mapbox\myApp\src\app\app.html"*/
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({template:/*ion-inline-start:"C:\Users\Ja\Dysk Google\Aplikacje Mobilne\mapbox\myApp\src\app\app.html"*/'<ion-nav [root]="rootPage"></ion-nav>'/*ion-inline-end:"C:\Users\Ja\Dysk Google\Aplikacje Mobilne\mapbox\myApp\src\app\app.html"*/
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* Platform */], __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */], __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */]])
     ], MyApp);

@@ -20,6 +20,7 @@ export class HomePage implements OnInit {
   @ViewChild('map') mapContainer: ElementRef;
   map: any;
   index = 0;
+  distance: number;
   marker: mapboxgl.Marker;
   lat = 37.75;
   lng = -122.41;
@@ -214,7 +215,7 @@ export class HomePage implements OnInit {
           }
         }
       });
-
+      this.distance = data.routes[0].distance;
       // this is where the JavaScript from the next step will go
       console.log("dystans " + data.routes[0].distance);
     })
@@ -253,10 +254,17 @@ export class HomePage implements OnInit {
     this.markersPath = [];
     console.log('aa');
   }
-  SendPath(){
-    
+  SendPath() {
+    console.log('wysylanie');
+    this.http.post('http://127.0.0.1:3456/', {
+      info: 'sent request',
+      totalDistance: this.distance,
+      MarkersPath: this.markersPath.map(x=>x.getLngLat())
+    }, { responseType: 'text' }).subscribe(res => {
+      console.log(JSON.stringify(res));
+    });
+
+
+
   }
-
-
-
 }
