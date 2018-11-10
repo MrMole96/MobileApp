@@ -1,0 +1,10 @@
+mat-list{
+    border: 2px solid red;
+}
+mat-list-item{
+    font-size: 25px;
+}
+mat-list-item:first-child{
+    text-align: center;
+    display: inline;
+}

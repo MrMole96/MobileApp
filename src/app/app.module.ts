@@ -4,21 +4,23 @@ import { IonicApp, IonicErrorHandler, IonicModule, IonicPageModule } from 'ionic
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
-
+import { MatListModule } from '@angular/material';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StartMenuComponent } from '../pages/startmenu/startMenu';
 import { HttpClientModule} from '@angular/common/http';
+import { LoadGameComponent } from '../pages/loadgame/loadgame';
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
     StartMenuComponent,
-   
+   LoadGameComponent,
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
+    MatListModule,
     IonicModule.forRoot(MyApp),
  
   ],
@@ -27,7 +29,7 @@ import { HttpClientModule} from '@angular/common/http';
     MyApp,
     HomePage,
     StartMenuComponent,
-  
+    LoadGameComponent
 
   ],
   providers: [

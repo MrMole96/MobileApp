@@ -25,6 +25,8 @@ export class HomePage implements OnInit {
   lat = 37.75;
   lng = -122.41;
   markersPath: mapboxgl.Marker[] = []
+
+  pathLane: any;
   directions = new MapboxDirections({
     accessToken: 'pk.eyJ1Ijoicmlja2NhcmRkZGQiLCJhIjoiY2puYWd4cTU3MGc3azNycDh3dnllNWNtZyJ9.MTH5zn5hLiXz9jBvGadOVQ',
     unit: 'metric',
@@ -99,18 +101,9 @@ export class HomePage implements OnInit {
 
   }
   addMarker(event: mapboxgl.MapMouseEvent) {
-    //console.log(event.originalEvent.composedPath());
     if (event.originalEvent.composedPath().length != 13) {
       console.log(event);
       console.log('event stop')
-      // console.log(this.directions.getWaypoints());
-      // let arrayPoints = this.directions.getWaypoints();
-      // let coordinates = arrayPoints[arrayPoints.length-1].geometry.coordinates;
-
-      // console.log(coordinates);
-      // this.directions.on('route', function(){
-      //   console.log('event route');
-      // })
       return false;
     }
 
@@ -172,22 +165,8 @@ export class HomePage implements OnInit {
     var directionsRequest = 'https://api.mapbox.com/directions/v5/mapbox/walking/' + element + '?geometries=geojson&access_token=' + mapboxgl.accessToken;
     this.http.get(directionsRequest).subscribe((data: any) => {
       var route = data.routes[0].geometry;
-      this.map.addLayer({
-        id: 'route',
-        type: 'line',
-        source: {
-          type: 'geojson',
-          data: {
-            type: 'Feature',
-            geometry: route
-          }
-        },
-        paint: {
-          'line-width': 3
-        }
-      });
-      // this is where the code from the next step will go
-      this.map.addLayer({
+
+      var startLane = {
         id: 'start',
         type: 'circle',
         source: {
@@ -200,8 +179,22 @@ export class HomePage implements OnInit {
             }
           }
         }
-      });
-      this.map.addLayer({
+      }
+      this.pathLane = {
+        id: 'route',
+        type: 'line',
+        source: {
+          type: 'geojson',
+          data: {
+            type: 'Feature',
+            geometry: route
+          }
+        },
+        paint: {
+          'line-width': 3
+        }
+      }
+      var finishLane = {
         id: 'end',
         type: 'circle',
         source: {
@@ -214,16 +207,15 @@ export class HomePage implements OnInit {
             }
           }
         }
-      });
+      }
+      this.map.addLayer(this.pathLane);
+      this.map.addLayer(startLane);
+      this.map.addLayer(finishLane);
+
       this.distance = data.routes[0].distance;
       // this is where the JavaScript from the next step will go
       console.log("dystans " + data.routes[0].distance);
     })
-    // this.directions.setOrigin(start); 
-    // this.directions.addWaypoint(0, [-84.4974, 39.132070]);
-    // this.directions.addWaypoint(1, [-84.508641, 39.1090]);
-    // this.directions.setDestination(end); 
-    //console.log(this.directions.getWaypoints());
   }
   updateGeocoderProximity() {
     // proximity is designed for local scale, if the user is looking at the whole world,
@@ -259,7 +251,8 @@ export class HomePage implements OnInit {
     this.http.post('http://127.0.0.1:3456/', {
       info: 'sent request',
       totalDistance: this.distance,
-      MarkersPath: this.markersPath.map(x=>x.getLngLat())
+      pathLane: this.pathLane,
+      MarkersPath: this.markersPath.map(x => x.getLngLat())
     }, { responseType: 'text' }).subscribe(res => {
       console.log(JSON.stringify(res));
     });

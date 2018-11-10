@@ -25679,6 +25679,19 @@ ion-navbar.toolbar {
   width: 100%;
 }
 
+mat-list {
+  border: 2px solid red;
+}
+
+mat-list-item {
+  font-size: 25px;
+}
+
+mat-list-item:first-child {
+  text-align: center;
+  display: in;
+}
+
 .container {
   margin: 50% auto;
   text-align: center;
