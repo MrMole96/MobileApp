@@ -18,19 +18,29 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json())
 app.use(cors());
 
-var examplePath = [];
 
+
+function Path(distance, name, path) {
+    this.distance = distance,
+        this.name = name,
+        this.array = path
+};
+
+var examplePath = [];
+var distance = 0;
 
 app.get('/', (req, res, next) => {
     res.json({
-        'example': examplePath
+        'example': examplePath,
+        distance
     });
-   // res.send(JSON.stringify(examplePath))
+    // res.send(JSON.stringify(examplePath))
     console.log('loaded data  ' + examplePath);
 });
 app.post('/', (req, res, next) => {
     // console.log(req.body);
-    examplePath.push(req.body.MarkersPath)
+    examplePath.push(new Path(req.body.totalDistance,'aaa',req.body.MarkersPath))
+    distance = req.body.totalDistance
     console.log(req.body.MarkersPath)
 
     console.log('example path ' + examplePath)
