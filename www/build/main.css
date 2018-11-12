@@ -25689,7 +25689,7 @@ mat-list-item {
 
 mat-list-item:first-child {
   text-align: center;
-  display: in;
+  display: inline;
 }
 
 .container {

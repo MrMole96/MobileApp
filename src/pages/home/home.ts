@@ -26,7 +26,10 @@ export class HomePage implements OnInit {
   lng = -122.41;
   markersPath: mapboxgl.Marker[] = []
 
+  startLane: any;
   pathLane: any;
+  finishLane: any;
+
   directions = new MapboxDirections({
     accessToken: 'pk.eyJ1Ijoicmlja2NhcmRkZGQiLCJhIjoiY2puYWd4cTU3MGc3azNycDh3dnllNWNtZyJ9.MTH5zn5hLiXz9jBvGadOVQ',
     unit: 'metric',
@@ -71,6 +74,7 @@ export class HomePage implements OnInit {
       container: 'map',
       style: 'mapbox://styles/mapbox/outdoors-v10',
       zoom: 13,
+      doubleClickZoom: false,
       center: [this.lng, this.lat]
     });
     var nav = new mapboxgl.NavigationControl();
@@ -84,6 +88,7 @@ export class HomePage implements OnInit {
     //   this.addMarker(event);
     //   console.log(this.directions.getWaypoints());
     // })
+
     this.map.on('click', this.addMarker.bind(this));
 
 
@@ -100,13 +105,14 @@ export class HomePage implements OnInit {
     //this.map.on('moveend', this.updateGeocoderProximity.bind(this)); // and then update proximity each time the map moves
 
   }
-  addMarker(event: mapboxgl.MapMouseEvent) {
+  addMarker(event: any) {
+    //if (event.originalEvent.composedPath().length != 13) {
     if (event.originalEvent.composedPath().length != 13) {
-      console.log(event);
+
       console.log('event stop')
       return false;
     }
-
+    console.log('aasda')
     this.marker = new mapboxgl.Marker({
       draggable: true
     })
@@ -166,7 +172,7 @@ export class HomePage implements OnInit {
     this.http.get(directionsRequest).subscribe((data: any) => {
       var route = data.routes[0].geometry;
 
-      var startLane = {
+      this.startLane = {
         id: 'start',
         type: 'circle',
         source: {
@@ -194,7 +200,7 @@ export class HomePage implements OnInit {
           'line-width': 3
         }
       }
-      var finishLane = {
+      this.finishLane = {
         id: 'end',
         type: 'circle',
         source: {
@@ -209,8 +215,8 @@ export class HomePage implements OnInit {
         }
       }
       this.map.addLayer(this.pathLane);
-      this.map.addLayer(startLane);
-      this.map.addLayer(finishLane);
+      this.map.addLayer(this.startLane);
+      this.map.addLayer(this.finishLane);
 
       this.distance = data.routes[0].distance;
       // this is where the JavaScript from the next step will go
@@ -247,11 +253,13 @@ export class HomePage implements OnInit {
     console.log('aa');
   }
   SendPath() {
-    console.log('wysylanie');
+    console.log(this.markersPath.map(x => x.getLngLat()));
     this.http.post('http://127.0.0.1:3456/', {
       info: 'sent request',
       totalDistance: this.distance,
-      pathLane: this.pathLane,
+      // start: this.startLane,
+      // pathLane: this.pathLane,
+      // finish: this.finishLane,
       MarkersPath: this.markersPath.map(x => x.getLngLat())
     }, { responseType: 'text' }).subscribe(res => {
       console.log(JSON.stringify(res));
