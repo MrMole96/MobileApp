@@ -8,20 +8,32 @@ cors({
     origin: true
 })
 // parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: false }))
- 
+app.use(bodyParser.urlencoded({
+    extended: false
+}))
+
+
+
 // parse application/json
 app.use(bodyParser.json())
 app.use(cors());
 
+var examplePath = [];
+
+
 app.get('/', (req, res, next) => {
     res.json({
-        'status': 'success get'
+        'example': examplePath
     });
-    console.log(res.body);
+   // res.send(JSON.stringify(examplePath))
+    console.log('loaded data  ' + examplePath);
 });
 app.post('/', (req, res, next) => {
-    console.log(req.body);
+    // console.log(req.body);
+    examplePath.push(req.body.MarkersPath)
+    console.log(req.body.MarkersPath)
+
+    console.log('example path ' + examplePath)
     res.send('Server responed');
 });
 var server = app.listen(3456, "127.0.0.1", function () {
