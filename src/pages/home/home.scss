@@ -1,6 +1,13 @@
 //@import '../../../node_modules/mapbox-gl/dist/mapbox-gl.css';
-page-home {
+.example-form {
+    min-width: 150px;
+    max-width: 500px;
+    width: 100%;
+  }
+  
+  .example-full-width {
+    width: 100%;
+  }
 
-}
 #map { height: 400px;
 width: 100%; }

@@ -1,3 +1,4 @@
+@import url(@angular/material/prebuilt-themes/deeppurple-amber.css);
 .ion-ios-add:before {
   content: "\f102";
 }
@@ -25672,6 +25673,21 @@ ion-navbar.toolbar {
   padding-bottom: calc(env(safe-area-inset-bottom) + 4px);
   min-height: calc(46px + constant(safe-area-inset-bottom));
   min-height: calc(46px + env(safe-area-inset-bottom));
+}
+
+#map {
+  height: 400px;
+  width: 100%;
+}
+
+.example-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.example-full-width {
+  width: 100%;
 }
 
 #map {

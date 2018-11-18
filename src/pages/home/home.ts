@@ -1,10 +1,11 @@
-import { Component, ElementRef, ViewChild, OnInit, Injectable } from '@angular/core';
+import { Component, ElementRef, ViewChild, OnInit, Injectable, Input } from '@angular/core';
 import { NavController, Config } from 'ionic-angular';
 import { HttpClient } from '@angular/common/http';
 import * as mapboxgl from 'mapbox-gl';
 import * as MapboxDirections from '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions';
 import * as MapboxGeocoder from '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.min.js';
 import { LatLng } from 'leaflet';
+import { HtmlParser } from '@angular/compiler';
 
 // interface markersType
 // {
@@ -16,6 +17,7 @@ import { LatLng } from 'leaflet';
   templateUrl: './home.html',
 })
 @Injectable()
+@Input()
 export class HomePage implements OnInit {
   @ViewChild('map') mapContainer: ElementRef;
   map: any;
@@ -25,11 +27,10 @@ export class HomePage implements OnInit {
   lat = 37.75;
   lng = -122.41;
   markersPath: mapboxgl.Marker[] = []
-
+  gameName: any;
   startLane: any;
   pathLane: any;
   finishLane: any;
-
   directions = new MapboxDirections({
     accessToken: 'pk.eyJ1Ijoicmlja2NhcmRkZGQiLCJhIjoiY2puYWd4cTU3MGc3azNycDh3dnllNWNtZyJ9.MTH5zn5hLiXz9jBvGadOVQ',
     unit: 'metric',
@@ -42,6 +43,10 @@ export class HomePage implements OnInit {
   geocoder = new MapboxGeocoder({
     accessToken: 'pk.eyJ1Ijoicmlja2NhcmRkZGQiLCJhIjoiY2puYWd4cTU3MGc3azNycDh3dnllNWNtZyJ9.MTH5zn5hLiXz9jBvGadOVQ'
   });
+
+
+  fakeArray: Array<any> = [];
+  counter = 0
   constructor(public navCtrl: NavController, public http: HttpClient) {
     //mapboxgl.accessToken = 'pk.eyJ1Ijoicmlja2NhcmRkZGQiLCJhIjoiY2puYWd4cTU3MGc3azNycDh3dnllNWNtZyJ9.MTH5zn5hLiXz9jBvGadOVQ'
     Object.getOwnPropertyDescriptor(mapboxgl, "accessToken").set('pk.eyJ1Ijoicmlja2NhcmRkZGQiLCJhIjoiY2puYWd4cTU3MGc3azNycDh3dnllNWNtZyJ9.MTH5zn5hLiXz9jBvGadOVQ');
@@ -90,16 +95,9 @@ export class HomePage implements OnInit {
     // })
 
     this.map.on('click', this.addMarker.bind(this));
-
-
-
-    // this.getRoute();
+    //this.getRoute();
     //this.map.on('load', this.getRoute.bind(this));
     //this.map.addControl(this.directions, 'top-left');
-
-
-
-
     this.map.addControl(this.geocoder);
     // this.map.on('load', this.updateGeocoderProximity.bind(this)); // set proximity on map load
     //this.map.on('moveend', this.updateGeocoderProximity.bind(this)); // and then update proximity each time the map moves
@@ -107,44 +105,81 @@ export class HomePage implements OnInit {
   }
   addMarker(event: any) {
     //if (event.originalEvent.composedPath().length != 13) {
-    if (event.originalEvent.composedPath().length != 13) {
 
+
+    if (event.originalEvent.composedPath().length != 13) {
       console.log('event stop')
+      console.log(event);
       return false;
     }
-    console.log('aasda')
-    this.marker = new mapboxgl.Marker({
-      draggable: true
-    })
+
+    var button = document.createElement('button')
+    button.setAttribute("id", this.counter.toString())
+    button.textContent = 'kasuj ' + this.counter.toString()
+
+    let popup = new mapboxgl.Popup({ offset: 25 })
+      .setDOMContent(button) // add popups
+    this.marker = new mapboxgl.Marker({ draggable: true })
       .setLngLat([event.lngLat.lng, event.lngLat.lat])
-      .setPopup(new mapboxgl.Popup({ offset: 25 }) // add popups
-        .setHTML('<h3>' + 'test' + '</h3><p>' + '<input/>' + '</p>'))
+      .setPopup(popup)
       .addTo(this.map);
+    this.delete(button);
+    this.fakeArray.push(button);
     this.markersPath.push(this.marker);
-
-    console.log(this.marker);
-    console.log(this.marker.getLngLat().lng);
-    this.getRoute();
+    this.counter = this.markersPath.length
 
 
-    this.directions.addWaypoint(this.index, [event.lngLat.lng, event.lngLat.lat]);
-    this.index++;
-    console.log(this.directions.getWaypoints());
+
+    // this.directions.addWaypoint(this.index, [event.lngLat.lng, event.lngLat.lat]);
+    // this.index++;
     // console.log( this.markersPath);
     console.log('event start')
+
+
     this.marker.on('dragend', this.onDragEnd.bind(this));
+
+    this.getRoute();
   }
+  delete(button) {
+    button.addEventListener('click', (e) => {
+
+
+      var target = e.target || e.srcElement || e.currentTarget;
+      var idAttr = target.attributes.id;
+      var value = idAttr.nodeValue;
+
+      //fakemarker = this.markersPath.find(x=>x.getLngLat().lat==event.lngLat.lat)
+      let index = this.fakeArray.indexOf(target)
+      console.log(this.fakeArray.indexOf(target))
+      console.log(this.fakeArray)
+      console.log(this.markersPath)
+      // index.remove();
+     console.log(this.markersPath[index])
+      this.markersPath[index].remove();
+      this.fakeArray.splice(index,1);
+       this.markersPath.splice(index,1);
+
+      this.getRoute();
+      console.log('dziala')
+    })
+  }
+
+
   onDragEnd() {
+
     var lngLat = this.marker.getLngLat();
-    //console.log(lngLat);
+    console.log(lngLat);
+    console.log(this.markersPath);
+    this.getRoute();
   }
   getRoute() {
+
     var start = [this.markersPath[0].getLngLat().lng, this.markersPath[0].getLngLat().lat];
     var end = [this.markersPath[this.markersPath.length - 1].getLngLat().lng, this.markersPath[this.markersPath.length - 1].getLngLat().lat];
     //this.markersPath[0].lng + ',' + this.markersPath[0].lat +
-    console.log(this.markersPath);
-    console.log('dlugosc start' + start.length);
-    console.log('dlugosc end' + end.length);
+    // console.log(this.markersPath[0]);
+    // console.log('dlugosc start' + start.length);
+    // console.log('dlugosc end' + end.length);
     let element = "";
     for (let index = 0; index < this.markersPath.length; index++) {
       if (index != this.markersPath.length - 1) {
@@ -153,7 +188,7 @@ export class HomePage implements OnInit {
         element += this.markersPath[index].getLngLat().lng + ',' + this.markersPath[index].getLngLat().lat;
       }
 
-      console.log('element array  :' + element);
+      // console.log('element array  :' + element);
     }
     if (start[0] == end[0]) {
 
@@ -161,17 +196,21 @@ export class HomePage implements OnInit {
     }
 
     if (this.map.getLayer('route') != null) {
-      this.map.removeLayer('route');
+      this.map.removeLayer('start');
       this.map.removeLayer('end');
-      this.map.removeSource('route');
+      this.map.removeLayer('route');
+      this.map.removeSource('start');
       this.map.removeSource('end');
+      this.map.removeSource('route');
     }
 
     //start[0] + ',' + start[1] + ';' + end[0] + ',' + end[1]
     var directionsRequest = 'https://api.mapbox.com/directions/v5/mapbox/walking/' + element + '?geometries=geojson&access_token=' + mapboxgl.accessToken;
     this.http.get(directionsRequest).subscribe((data: any) => {
       var route = data.routes[0].geometry;
-
+      console.log('start ', start)
+console.log('route ', route)
+console.log('end ', end)
       this.startLane = {
         id: 'start',
         type: 'circle',
@@ -219,10 +258,11 @@ export class HomePage implements OnInit {
       this.map.addLayer(this.finishLane);
 
       this.distance = data.routes[0].distance;
-      // this is where the JavaScript from the next step will go
+
       console.log("dystans " + data.routes[0].distance);
     })
   }
+
   updateGeocoderProximity() {
     // proximity is designed for local scale, if the user is looking at the whole world,
     // it doesn't make sense to factor in the arbitrary centre of the map
@@ -252,14 +292,13 @@ export class HomePage implements OnInit {
     this.markersPath = [];
     console.log('aa');
   }
+
   SendPath() {
     console.log(this.markersPath.map(x => x.getLngLat()));
     this.http.post('http://127.0.0.1:3456/', {
       info: 'sent request',
       totalDistance: this.distance,
-      // start: this.startLane,
-      // pathLane: this.pathLane,
-      // finish: this.finishLane,
+      gameName: this.gameName,
       MarkersPath: this.markersPath.map(x => x.getLngLat())
     }, { responseType: 'text' }).subscribe(res => {
       console.log(JSON.stringify(res));
