@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import * as mapboxgl from 'mapbox-gl';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
     selector: 'app-game',
@@ -17,7 +18,7 @@ export class GameComponent implements OnInit {
     startLane: any;
     pathLane: any;
     finishLane: any;
-    constructor() {
+    constructor(public http: HttpClient) {
         Object.getOwnPropertyDescriptor(mapboxgl, "accessToken").set('pk.eyJ1Ijoicmlja2NhcmRkZGQiLCJhIjoiY2puYWd4cTU3MGc3azNycDh3dnllNWNtZyJ9.MTH5zn5hLiXz9jBvGadOVQ');
     }
 
@@ -37,19 +38,32 @@ export class GameComponent implements OnInit {
 
         this.loadData()
     }
-     sleep(ms) {
+    sleep(ms) {
         return new Promise(resolve => setTimeout(resolve, ms));
-      }
+    }
     async loadData() {
 
-     await this.sleep(2000)
+        await this.sleep(2000)
 
-            let start = JSON.parse(localStorage.getItem('loadedPath'))
-            let route = JSON.parse(localStorage.getItem('loadedPath'))
-            let end = JSON.parse(localStorage.getItem('loadedPath'))
-            console.log(start[0].start);
-            console.log(route[0].route);
-            console.log(end[0].end);
+        let data = JSON.parse(localStorage.getItem('loadedPath'));
+        let numberPath = JSON.parse(localStorage.getItem('index'))
+        let last = data[numberPath].array.length - 1;
+        let start = data[numberPath].array[0];
+        let end = data[numberPath].array[last];
+        let path = "";
+        for (let index = 0; index < data[numberPath].array.length; index++) {
+            if (index != data[numberPath].array.length - 1) {
+                path += data[numberPath].array[index].lng + ',' + data[numberPath].array[index].lat + ';';
+            } else {
+                path += data[numberPath].array[index].lng + ',' + data[numberPath].array[index].lat;
+            }
+            this.addMarker(data[numberPath].array[index]);
+        }
+        console.log('array path', path);
+        var directionsRequest = 'https://api.mapbox.com/directions/v5/mapbox/walking/' + path + '?geometries=geojson&access_token=' + mapboxgl.accessToken;
+        this.http.get(directionsRequest).subscribe((data: any) => {
+            var route = data.routes[0].geometry.coordinates;
+
             this.startLane = {
                 id: 'start',
                 type: 'circle',
@@ -59,7 +73,7 @@ export class GameComponent implements OnInit {
                         type: 'Feature',
                         geometry: {
                             type: 'Point',
-                            coordinates: start[0].start
+                            coordinates: start
                         }
                     }
                 }
@@ -73,9 +87,9 @@ export class GameComponent implements OnInit {
                         type: 'Feature',
                         geometry: {
                             type: 'LineString',
-                            coordinates: route[0].route
+                            coordinates: route
                         }
-                        
+
                     }
                 },
                 paint: {
@@ -91,15 +105,25 @@ export class GameComponent implements OnInit {
                         type: 'Feature',
                         geometry: {
                             type: 'Point',
-                            coordinates: end[0].end
+                            coordinates: end
                         }
                     }
                 }
             }
-            
+
             this.map.addLayer(this.pathLane);
             this.map.addLayer(this.startLane);
             this.map.addLayer(this.finishLane);
-     
+        })
+
+        console.log(path);
     }
+    addMarker(event) {
+        let marker = new mapboxgl.Marker()
+            .setLngLat([event.lng, event.lat])
+            .addTo(this.map);
+    }
+
+
+
 }

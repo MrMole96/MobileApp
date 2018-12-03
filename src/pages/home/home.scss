@@ -7,7 +7,33 @@
   
   .example-full-width {
     width: 100%;
+    
   }
+  
 
 #map { height: 400px;
 width: 100%; }
+#marker{
+  text-align: center;
+  width: 200px;
+  border-radius: 10px;
+}
+#task > input {
+  text-align: center;
+}
+#quest{
+  width: 100%;
+
+}
+#cos{
+  width: 100px;
+  background: red;
+}
+input{
+  margin: 1px;
+  border: solid 3px #0F86BD;
+  border-radius: 10px;
+}
+input[type="radio"] {
+  margin: 5px;
+}

@@ -68,7 +68,9 @@ export class LoadGameComponent implements OnInit {
 
 
     }
-    loadPath() {
+    loadPath(i) {
+        console.log('index ' + i)
+        localStorage.setItem('index', i);
         this.navCtrl.push(GameComponent);
     }
 

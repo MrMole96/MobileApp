@@ -112,19 +112,79 @@ export class HomePage implements OnInit {
       console.log(event);
       return false;
     }
+    var div = document.createElement('div')
+    div.setAttribute("id", 'marker');
+    var title = document.createElement('h2');
+    title.textContent = 'Punkt';
+    var div2 = document.createElement('div');
+    div2.setAttribute("id","task")
+  
+    var quest = document.createElement('input')
+    var answerA = document.createElement('input') 
+    var answerB = document.createElement('input')
+    var answerC =document.createElement('input')
+    quest.setAttribute('id', 'quest');
+    quest.placeholder = 'zadanie';
+    answerA.setAttribute('id', 'answerA')
+    answerB.setAttribute('id', 'answerB')
+    answerC.setAttribute('id', 'answerC')
+    answerA.placeholder = 'odpowiedz A';
+    answerB.placeholder = 'odpowiedz B';
+    answerC.placeholder = 'odpowiedz C';
 
-    var button = document.createElement('button')
-    button.setAttribute("id", this.counter.toString())
-    button.textContent = 'kasuj ' + this.counter.toString()
+    var button1 = document.createElement('button');
+    button1.setAttribute('ion-button','');
+    button1.textContent = 'Zatwierdz';
+
+    var radio1 = document.createElement('input');
+    var radio2 = document.createElement('input');
+    var radio3 = document.createElement('input');
+
+
+    radio1.setAttribute('type', 'radio');
+    radio1.setAttribute('name', 'answer');
+
+    radio2.setAttribute('type', 'radio');
+    radio2.setAttribute('name', 'answer');
+
+    radio3.setAttribute('type', 'radio');
+    radio3.setAttribute('name', 'answer');
+
+    var button2 = document.createElement('button')
+    button2.setAttribute("id", this.counter.toString())
+    button2.textContent = 'kasuj ' + this.counter.toString()
+
+    
+
+
+
+    div.appendChild(title);
+    div.appendChild(div2);
+
+
+    div2.appendChild(quest);
+
+    div2.appendChild(answerA);
+    div2.appendChild(radio1);
+    div2.appendChild(answerB);
+    div2.appendChild(radio2);
+    div2.appendChild(answerC);
+    div2.appendChild(radio3);
+
+    div2.appendChild(button1);
+
+
+    div2.appendChild(button2);
+
 
     let popup = new mapboxgl.Popup({ offset: 25 })
-      .setDOMContent(button) // add popups
+      .setDOMContent(div) // add popups
     this.marker = new mapboxgl.Marker({ draggable: true })
       .setLngLat([event.lngLat.lng, event.lngLat.lat])
       .setPopup(popup)
       .addTo(this.map);
-    this.delete(button);
-    this.fakeArray.push(button);
+    this.delete(button2);
+    this.fakeArray.push(button2);
     this.markersPath.push(this.marker);
     this.counter = this.markersPath.length
 
@@ -154,10 +214,10 @@ export class HomePage implements OnInit {
       console.log(this.fakeArray)
       console.log(this.markersPath)
       // index.remove();
-     console.log(this.markersPath[index])
+      console.log(this.markersPath[index])
       this.markersPath[index].remove();
-      this.fakeArray.splice(index,1);
-       this.markersPath.splice(index,1);
+      this.fakeArray.splice(index, 1);
+      this.markersPath.splice(index, 1);
 
       this.getRoute();
       console.log('dziala')
@@ -209,8 +269,8 @@ export class HomePage implements OnInit {
     this.http.get(directionsRequest).subscribe((data: any) => {
       var route = data.routes[0].geometry;
       console.log('start ', start)
-console.log('route ', route)
-console.log('end ', end)
+      console.log('route ', route)
+      console.log('end ', end)
       this.startLane = {
         id: 'start',
         type: 'circle',
@@ -290,6 +350,7 @@ console.log('end ', end)
 
     this.markersPath.map(x => x.remove());
     this.markersPath = [];
+    this.fakeArray = [];
     console.log('aa');
   }
 

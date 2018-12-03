@@ -15,7 +15,7 @@
     <mat-list-item> Salt </mat-list-item>
     <mat-list-item> Paprika </mat-list-item>
   </mat-list>
-<mat-list *ngFor="let path of loadedPath" (click)="loadPath()">
+<mat-list *ngFor="let path of loadedPath; let i = index" (click)="loadPath(i)">
 <mat-list-item >{{path.distance}}</mat-list-item>
 <mat-list-item >{{path.name}}</mat-list-item>
 </mat-list>

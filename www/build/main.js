@@ -87,7 +87,7 @@ var StartMenuComponent = /** @class */ (function () {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LoadGameComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(59);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_common_http__ = __webpack_require__(79);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_common_http__ = __webpack_require__(66);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__game_game__ = __webpack_require__(240);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -150,17 +150,18 @@ var LoadGameComponent = /** @class */ (function () {
             console.log('json parser local offiline', JSON.parse(localStorage.getItem('loadedPath')));
         });
     };
-    LoadGameComponent.prototype.loadPath = function () {
+    LoadGameComponent.prototype.loadPath = function (i) {
+        console.log('index ' + i);
+        localStorage.setItem('index', i);
         this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_3__game_game__["a" /* GameComponent */]);
     };
     LoadGameComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'app-load',template:/*ion-inline-start:"C:\Users\Ja\Dysk Google\Aplikacje Mobilne\mapbox\myApp\src\pages\loadgame\loadgame.html"*/'<ion-header>\n\n  <ion-navbar>\n\n    <button ion-button menuToggle>\n\n      <ion-icon name="menu"></ion-icon>\n\n    </button>\n\n    <ion-title>Wczytaj gre</ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content padding>\n\n\n\n  <h2>{{information}}</h2>\n\n  <mat-list>\n\n    <mat-list-item> Pepper </mat-list-item>\n\n    <mat-list-item> Salt </mat-list-item>\n\n    <mat-list-item> Paprika </mat-list-item>\n\n  </mat-list>\n\n<mat-list *ngFor="let path of loadedPath" (click)="loadPath()">\n\n<mat-list-item >{{path.distance}}</mat-list-item>\n\n<mat-list-item >{{path.name}}</mat-list-item>\n\n</mat-list>\n\n\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\Ja\Dysk Google\Aplikacje Mobilne\mapbox\myApp\src\pages\loadgame\loadgame.html"*/,
+            selector: 'app-load',template:/*ion-inline-start:"C:\Users\Ja\Dysk Google\Aplikacje Mobilne\mapbox\myApp\src\pages\loadgame\loadgame.html"*/'<ion-header>\n\n  <ion-navbar>\n\n    <button ion-button menuToggle>\n\n      <ion-icon name="menu"></ion-icon>\n\n    </button>\n\n    <ion-title>Wczytaj gre</ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content padding>\n\n\n\n  <h2>{{information}}</h2>\n\n  <mat-list>\n\n    <mat-list-item> Pepper </mat-list-item>\n\n    <mat-list-item> Salt </mat-list-item>\n\n    <mat-list-item> Paprika </mat-list-item>\n\n  </mat-list>\n\n<mat-list *ngFor="let path of loadedPath; let i = index" (click)="loadPath(i)">\n\n<mat-list-item >{{path.distance}}</mat-list-item>\n\n<mat-list-item >{{path.name}}</mat-list-item>\n\n</mat-list>\n\n\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\Ja\Dysk Google\Aplikacje Mobilne\mapbox\myApp\src\pages\loadgame\loadgame.html"*/,
         }),
-        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__angular_common_http__["a" /* HttpClient */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_common_http__["a" /* HttpClient */]) === "function" && _b || Object])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* NavController */], __WEBPACK_IMPORTED_MODULE_2__angular_common_http__["a" /* HttpClient */]])
     ], LoadGameComponent);
     return LoadGameComponent;
-    var _a, _b;
 }());
 
 //# sourceMappingURL=loadgame.js.map
@@ -175,6 +176,7 @@ var LoadGameComponent = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_mapbox_gl__ = __webpack_require__(241);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_mapbox_gl___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_mapbox_gl__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_common_http__ = __webpack_require__(66);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -221,8 +223,10 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 
 
+
 var GameComponent = /** @class */ (function () {
-    function GameComponent() {
+    function GameComponent(http) {
+        this.http = http;
         this.lat = 37.75;
         this.lng = -122.41;
         this.name = "cos";
@@ -246,83 +250,103 @@ var GameComponent = /** @class */ (function () {
     };
     GameComponent.prototype.loadData = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var start, route, end;
+            var _this = this;
+            var data, numberPath, last, start, end, path, index, directionsRequest;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, this.sleep(2000)];
                     case 1:
                         _a.sent();
-                        start = JSON.parse(localStorage.getItem('loadedPath'));
-                        route = JSON.parse(localStorage.getItem('loadedPath'));
-                        end = JSON.parse(localStorage.getItem('loadedPath'));
-                        console.log(start[0].start);
-                        console.log(route[0].route);
-                        console.log(end[0].end);
-                        this.startLane = {
-                            id: 'start',
-                            type: 'circle',
-                            source: {
-                                type: 'geojson',
-                                data: {
-                                    type: 'Feature',
-                                    geometry: {
-                                        type: 'Point',
-                                        coordinates: start[0].start
+                        data = JSON.parse(localStorage.getItem('loadedPath'));
+                        numberPath = JSON.parse(localStorage.getItem('index'));
+                        last = data[numberPath].array.length - 1;
+                        start = data[numberPath].array[0];
+                        end = data[numberPath].array[last];
+                        path = "";
+                        for (index = 0; index < data[numberPath].array.length; index++) {
+                            if (index != data[numberPath].array.length - 1) {
+                                path += data[numberPath].array[index].lng + ',' + data[numberPath].array[index].lat + ';';
+                            }
+                            else {
+                                path += data[numberPath].array[index].lng + ',' + data[numberPath].array[index].lat;
+                            }
+                            this.addMarker(data[numberPath].array[index]);
+                        }
+                        console.log('array path', path);
+                        directionsRequest = 'https://api.mapbox.com/directions/v5/mapbox/walking/' + path + '?geometries=geojson&access_token=' + __WEBPACK_IMPORTED_MODULE_1_mapbox_gl__["accessToken"];
+                        this.http.get(directionsRequest).subscribe(function (data) {
+                            var route = data.routes[0].geometry.coordinates;
+                            _this.startLane = {
+                                id: 'start',
+                                type: 'circle',
+                                source: {
+                                    type: 'geojson',
+                                    data: {
+                                        type: 'Feature',
+                                        geometry: {
+                                            type: 'Point',
+                                            coordinates: start
+                                        }
                                     }
                                 }
-                            }
-                        };
-                        this.pathLane = {
-                            id: 'route',
-                            type: 'line',
-                            source: {
-                                type: 'geojson',
-                                data: {
-                                    type: 'Feature',
-                                    geometry: {
-                                        type: 'LineString',
-                                        coordinates: route[0].route
+                            };
+                            _this.pathLane = {
+                                id: 'route',
+                                type: 'line',
+                                source: {
+                                    type: 'geojson',
+                                    data: {
+                                        type: 'Feature',
+                                        geometry: {
+                                            type: 'LineString',
+                                            coordinates: route
+                                        }
+                                    }
+                                },
+                                paint: {
+                                    'line-width': 3
+                                }
+                            };
+                            _this.finishLane = {
+                                id: 'end',
+                                type: 'circle',
+                                source: {
+                                    type: 'geojson',
+                                    data: {
+                                        type: 'Feature',
+                                        geometry: {
+                                            type: 'Point',
+                                            coordinates: end
+                                        }
                                     }
                                 }
-                            },
-                            paint: {
-                                'line-width': 3
-                            }
-                        };
-                        this.finishLane = {
-                            id: 'end',
-                            type: 'circle',
-                            source: {
-                                type: 'geojson',
-                                data: {
-                                    type: 'Feature',
-                                    geometry: {
-                                        type: 'Point',
-                                        coordinates: end[0].end
-                                    }
-                                }
-                            }
-                        };
-                        this.map.addLayer(this.pathLane);
-                        this.map.addLayer(this.startLane);
-                        this.map.addLayer(this.finishLane);
+                            };
+                            _this.map.addLayer(_this.pathLane);
+                            _this.map.addLayer(_this.startLane);
+                            _this.map.addLayer(_this.finishLane);
+                        });
+                        console.log(path);
                         return [2 /*return*/];
                 }
             });
         });
     };
+    GameComponent.prototype.addMarker = function (event) {
+        var marker = new __WEBPACK_IMPORTED_MODULE_1_mapbox_gl__["Marker"]()
+            .setLngLat([event.lng, event.lat])
+            .addTo(this.map);
+    };
     __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_9" /* ViewChild */])('map'),
-        __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["t" /* ElementRef */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["t" /* ElementRef */]) === "function" && _a || Object)
+        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["t" /* ElementRef */])
     ], GameComponent.prototype, "mapContainer", void 0);
     GameComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'app-game',template:/*ion-inline-start:"C:\Users\Ja\Dysk Google\Aplikacje Mobilne\mapbox\myApp\src\pages\game\game.html"*/'<ion-header>\n\n    <ion-navbar>\n\n      <button ion-button menuToggle>\n\n        <ion-icon name="menu"></ion-icon>\n\n      </button>\n\n      <ion-title>{{name}}</ion-title>\n\n    </ion-navbar>\n\n  </ion-header>\n\n  <h4>Dystans trasy: {{distance}}</h4>\n\n  <ion-content padding>\n\n    <div id="map"></div>\n\n  </ion-content>\n\n'/*ion-inline-end:"C:\Users\Ja\Dysk Google\Aplikacje Mobilne\mapbox\myApp\src\pages\game\game.html"*/,
         }),
-        __metadata("design:paramtypes", [])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__angular_common_http__["a" /* HttpClient */]])
     ], GameComponent);
     return GameComponent;
-    var _a;
 }());
 
 //# sourceMappingURL=game.js.map
@@ -336,7 +360,7 @@ var GameComponent = /** @class */ (function () {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HomePage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(59);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_common_http__ = __webpack_require__(79);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_common_http__ = __webpack_require__(66);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_mapbox_gl__ = __webpack_require__(241);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_mapbox_gl___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_mapbox_gl__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__mapbox_mapbox_gl_directions_dist_mapbox_gl_directions__ = __webpack_require__(330);
@@ -439,17 +463,58 @@ var HomePage = /** @class */ (function () {
             console.log(event);
             return false;
         }
-        var button = document.createElement('button');
-        button.setAttribute("id", this.counter.toString());
-        button.textContent = 'kasuj ' + this.counter.toString();
+        var div = document.createElement('div');
+        div.setAttribute("id", 'marker');
+        var title = document.createElement('h2');
+        title.textContent = 'Punkt';
+        var div2 = document.createElement('div');
+        div2.setAttribute("id", "task");
+        var quest = document.createElement('input');
+        var answerA = document.createElement('input');
+        var answerB = document.createElement('input');
+        var answerC = document.createElement('input');
+        quest.setAttribute('id', 'quest');
+        quest.placeholder = 'zadanie';
+        answerA.setAttribute('id', 'answerA');
+        answerB.setAttribute('id', 'answerB');
+        answerC.setAttribute('id', 'answerC');
+        answerA.placeholder = 'odpowiedz A';
+        answerB.placeholder = 'odpowiedz B';
+        answerC.placeholder = 'odpowiedz C';
+        var button1 = document.createElement('button');
+        button1.setAttribute('ion-button', '');
+        button1.textContent = 'Zatwierdz';
+        var radio1 = document.createElement('input');
+        var radio2 = document.createElement('input');
+        var radio3 = document.createElement('input');
+        radio1.setAttribute('type', 'radio');
+        radio1.setAttribute('name', 'answer');
+        radio2.setAttribute('type', 'radio');
+        radio2.setAttribute('name', 'answer');
+        radio3.setAttribute('type', 'radio');
+        radio3.setAttribute('name', 'answer');
+        var button2 = document.createElement('button');
+        button2.setAttribute("id", this.counter.toString());
+        button2.textContent = 'kasuj ' + this.counter.toString();
+        div.appendChild(title);
+        div.appendChild(div2);
+        div2.appendChild(quest);
+        div2.appendChild(answerA);
+        div2.appendChild(radio1);
+        div2.appendChild(answerB);
+        div2.appendChild(radio2);
+        div2.appendChild(answerC);
+        div2.appendChild(radio3);
+        div2.appendChild(button1);
+        div2.appendChild(button2);
         var popup = new __WEBPACK_IMPORTED_MODULE_3_mapbox_gl__["Popup"]({ offset: 25 })
-            .setDOMContent(button); // add popups
+            .setDOMContent(div); // add popups
         this.marker = new __WEBPACK_IMPORTED_MODULE_3_mapbox_gl__["Marker"]({ draggable: true })
             .setLngLat([event.lngLat.lng, event.lngLat.lat])
             .setPopup(popup)
             .addTo(this.map);
-        this.delete(button);
-        this.fakeArray.push(button);
+        this.delete(button2);
+        this.fakeArray.push(button2);
         this.markersPath.push(this.marker);
         this.counter = this.markersPath.length;
         // this.directions.addWaypoint(this.index, [event.lngLat.lng, event.lngLat.lat]);
@@ -597,6 +662,7 @@ var HomePage = /** @class */ (function () {
         this.map.removeSource('end');
         this.markersPath.map(function (x) { return x.remove(); });
         this.markersPath = [];
+        this.fakeArray = [];
         console.log('aa');
     };
     HomePage.prototype.SendPath = function () {
@@ -616,7 +682,7 @@ var HomePage = /** @class */ (function () {
     ], HomePage.prototype, "mapContainer", void 0);
     HomePage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-home',template:/*ion-inline-start:"C:\Users\Ja\Dysk Google\Aplikacje Mobilne\mapbox\myApp\src\pages\home\home.html"*/'<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Stworz gre</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n  <h3>Ionic Menu Starter</h3>\n\n <button id="cos">aaaa</button>\n    <mat-form-field class="example-full-width">\n      <textarea [(ngModel)]="gameName" matInput placeholder="Nazwa gry"></textarea>\n    </mat-form-field>\n \n  <div id="map" ></div>\n\n\n  <button (click)="SendPath()">Wyślij</button>\n  <button (click)="BackToStart()">Toggle Menu</button>\n  <button (click)="ClearMap()">Clear Map</button>\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\Ja\Dysk Google\Aplikacje Mobilne\mapbox\myApp\src\pages\home\home.html"*/,
+            selector: 'page-home',template:/*ion-inline-start:"C:\Users\Ja\Dysk Google\Aplikacje Mobilne\mapbox\myApp\src\pages\home\home.html"*/'<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Stworz gre</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n  <h3>Ionic Menu Starter</h3>\n\n <button ion-button>a</button>\n\n\n    <mat-form-field class="example-full-width">\n      <textarea [(ngModel)]="gameName" matInput placeholder="Nazwa gry"></textarea>\n    </mat-form-field>\n \n  <div id="map" ></div>\n\n\n  <button (click)="SendPath()">Wyślij</button>\n  <button (click)="BackToStart()">Toggle Menu</button>\n  <button (click)="ClearMap()">Clear Map</button>\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\Ja\Dysk Google\Aplikacje Mobilne\mapbox\myApp\src\pages\home\home.html"*/,
         }),
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["B" /* Injectable */])(),
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["E" /* Input */])(),
@@ -661,7 +727,7 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__ionic_native_status_bar__ = __webpack_require__(233);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__ionic_native_splash_screen__ = __webpack_require__(237);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__pages_startmenu_startMenu__ = __webpack_require__(238);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__angular_common_http__ = __webpack_require__(79);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__angular_common_http__ = __webpack_require__(66);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__pages_loadgame_loadgame__ = __webpack_require__(239);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__pages_game_game__ = __webpack_require__(240);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
