@@ -367,6 +367,8 @@ var GameComponent = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__mapbox_mapbox_gl_directions_dist_mapbox_gl_directions___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__mapbox_mapbox_gl_directions_dist_mapbox_gl_directions__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__mapbox_mapbox_gl_geocoder_dist_mapbox_gl_geocoder_min_js__ = __webpack_require__(331);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__mapbox_mapbox_gl_geocoder_dist_mapbox_gl_geocoder_min_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__mapbox_mapbox_gl_geocoder_dist_mapbox_gl_geocoder_min_js__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_jquery__ = __webpack_require__(332);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_jquery__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -376,6 +378,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
 
 
 
@@ -407,7 +410,8 @@ var HomePage = /** @class */ (function () {
         this.geocoder = new __WEBPACK_IMPORTED_MODULE_5__mapbox_mapbox_gl_geocoder_dist_mapbox_gl_geocoder_min_js__({
             accessToken: 'pk.eyJ1Ijoicmlja2NhcmRkZGQiLCJhIjoiY2puYWd4cTU3MGc3azNycDh3dnllNWNtZyJ9.MTH5zn5hLiXz9jBvGadOVQ'
         });
-        this.fakeArray = [];
+        this.buttonsArray = [];
+        this.questsArray = [];
         this.counter = 0;
         //mapboxgl.accessToken = 'pk.eyJ1Ijoicmlja2NhcmRkZGQiLCJhIjoiY2puYWd4cTU3MGc3azNycDh3dnllNWNtZyJ9.MTH5zn5hLiXz9jBvGadOVQ'
         Object.getOwnPropertyDescriptor(__WEBPACK_IMPORTED_MODULE_3_mapbox_gl__, "accessToken").set('pk.eyJ1Ijoicmlja2NhcmRkZGQiLCJhIjoiY2puYWd4cTU3MGc3azNycDh3dnllNWNtZyJ9.MTH5zn5hLiXz9jBvGadOVQ');
@@ -456,13 +460,7 @@ var HomePage = /** @class */ (function () {
         // this.map.on('load', this.updateGeocoderProximity.bind(this)); // set proximity on map load
         //this.map.on('moveend', this.updateGeocoderProximity.bind(this)); // and then update proximity each time the map moves
     };
-    HomePage.prototype.addMarker = function (event) {
-        //if (event.originalEvent.composedPath().length != 13) {
-        if (event.originalEvent.composedPath().length != 13) {
-            console.log('event stop');
-            console.log(event);
-            return false;
-        }
+    HomePage.prototype.createPopUp = function (event) {
         var div = document.createElement('div');
         div.setAttribute("id", 'marker');
         var title = document.createElement('h2');
@@ -487,12 +485,15 @@ var HomePage = /** @class */ (function () {
         var radio1 = document.createElement('input');
         var radio2 = document.createElement('input');
         var radio3 = document.createElement('input');
-        radio1.setAttribute('type', 'radio');
+        radio1.setAttribute('type', 'checkbox');
         radio1.setAttribute('name', 'answer');
-        radio2.setAttribute('type', 'radio');
+        radio1.setAttribute('id', 'checkbox1');
+        radio2.setAttribute('type', 'checkbox');
         radio2.setAttribute('name', 'answer');
-        radio3.setAttribute('type', 'radio');
+        radio2.setAttribute('id', 'checkbox2');
+        radio3.setAttribute('type', 'checkbox');
         radio3.setAttribute('name', 'answer');
+        radio3.setAttribute('id', 'checkbox3');
         var button2 = document.createElement('button');
         button2.setAttribute("id", this.counter.toString());
         button2.textContent = 'kasuj ' + this.counter.toString();
@@ -514,40 +515,38 @@ var HomePage = /** @class */ (function () {
             .setPopup(popup)
             .addTo(this.map);
         this.delete(button2);
-        this.fakeArray.push(button2);
+        //wartosci z inputow sa w divie, zrobic funkcje ktora bedzie przechowywac te wartosci
+        this.buttonsArray.push(button2);
+        this.questsArray.push(div2.childNodes);
         this.markersPath.push(this.marker);
         this.counter = this.markersPath.length;
-        // this.directions.addWaypoint(this.index, [event.lngLat.lng, event.lngLat.lat]);
-        // this.index++;
-        // console.log( this.markersPath);
-        console.log('event start');
+    };
+    HomePage.prototype.addMarker = function (event) {
+        //if (event.originalEvent.composedPath().length != 13) {
+        if (event.originalEvent.composedPath().length != 13) {
+            return false;
+        }
+        this.createPopUp(event);
         this.marker.on('dragend', this.onDragEnd.bind(this));
         this.getRoute();
     };
     HomePage.prototype.delete = function (button) {
         var _this = this;
         button.addEventListener('click', function (e) {
-            var target = e.target || e.srcElement || e.currentTarget;
-            var idAttr = target.attributes.id;
+            var targetButton = e.target || e.srcElement || e.currentTarget;
+            var idAttr = targetButton.attributes.id;
             var value = idAttr.nodeValue;
             //fakemarker = this.markersPath.find(x=>x.getLngLat().lat==event.lngLat.lat)
-            var index = _this.fakeArray.indexOf(target);
-            console.log(_this.fakeArray.indexOf(target));
-            console.log(_this.fakeArray);
-            console.log(_this.markersPath);
-            // index.remove();
-            console.log(_this.markersPath[index]);
+            var index = _this.buttonsArray.indexOf(targetButton);
             _this.markersPath[index].remove();
-            _this.fakeArray.splice(index, 1);
+            _this.buttonsArray.splice(index, 1);
             _this.markersPath.splice(index, 1);
             _this.getRoute();
-            console.log('dziala');
         });
     };
     HomePage.prototype.onDragEnd = function () {
         var lngLat = this.marker.getLngLat();
-        console.log(lngLat);
-        console.log(this.markersPath);
+        console.log(this.questsArray);
         this.getRoute();
     };
     HomePage.prototype.getRoute = function () {
@@ -583,9 +582,6 @@ var HomePage = /** @class */ (function () {
         var directionsRequest = 'https://api.mapbox.com/directions/v5/mapbox/walking/' + element + '?geometries=geojson&access_token=' + __WEBPACK_IMPORTED_MODULE_3_mapbox_gl__["accessToken"];
         this.http.get(directionsRequest).subscribe(function (data) {
             var route = data.routes[0].geometry;
-            console.log('start ', start);
-            console.log('route ', route);
-            console.log('end ', end);
             _this.startLane = {
                 id: 'start',
                 type: 'circle',
@@ -632,7 +628,6 @@ var HomePage = /** @class */ (function () {
             _this.map.addLayer(_this.startLane);
             _this.map.addLayer(_this.finishLane);
             _this.distance = data.routes[0].distance;
-            console.log("dystans " + data.routes[0].distance);
         });
     };
     HomePage.prototype.updateGeocoderProximity = function () {
@@ -662,13 +657,23 @@ var HomePage = /** @class */ (function () {
         this.map.removeSource('end');
         this.markersPath.map(function (x) { return x.remove(); });
         this.markersPath = [];
-        this.fakeArray = [];
-        console.log('aa');
+        this.buttonsArray = [];
+        this.questsArray = [];
+    };
+    HomePage.prototype.changeTextColor = function () {
+        __WEBPACK_IMPORTED_MODULE_6_jquery__('#myButton').text('white');
     };
     HomePage.prototype.SendPath = function () {
-        console.log(this.markersPath.map(function (x) { return x.getLngLat(); }));
+        console.log(this.questsArray);
+        console.log(this.questsArray[0].input);
+        var tasks = Array();
+        this.questsArray.forEach(function (element) {
+            tasks.push(new Task(element[0].value, element[1].value, element[2].checked, element[3].value, element[4].checked, element[5].value, element[6].checked));
+        });
+        console.log(tasks);
         this.http.post('http://127.0.0.1:3456/', {
             info: 'sent request',
+            Tasks: tasks,
             totalDistance: this.distance,
             gameName: this.gameName,
             MarkersPath: this.markersPath.map(function (x) { return x.getLngLat(); })
@@ -682,7 +687,7 @@ var HomePage = /** @class */ (function () {
     ], HomePage.prototype, "mapContainer", void 0);
     HomePage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-home',template:/*ion-inline-start:"C:\Users\Ja\Dysk Google\Aplikacje Mobilne\mapbox\myApp\src\pages\home\home.html"*/'<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Stworz gre</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n  <h3>Ionic Menu Starter</h3>\n\n <button ion-button>a</button>\n\n\n    <mat-form-field class="example-full-width">\n      <textarea [(ngModel)]="gameName" matInput placeholder="Nazwa gry"></textarea>\n    </mat-form-field>\n \n  <div id="map" ></div>\n\n\n  <button (click)="SendPath()">Wyślij</button>\n  <button (click)="BackToStart()">Toggle Menu</button>\n  <button (click)="ClearMap()">Clear Map</button>\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\Ja\Dysk Google\Aplikacje Mobilne\mapbox\myApp\src\pages\home\home.html"*/,
+            selector: 'page-home',template:/*ion-inline-start:"C:\Users\Ja\Dysk Google\Aplikacje Mobilne\mapbox\myApp\src\pages\home\home.html"*/'<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Stworz gre</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n  <h3>Ionic Menu Starter</h3>\n\n <button ion-button>a</button>\n\n\n    <mat-form-field class="example-full-width">\n      <textarea [(ngModel)]="gameName" matInput placeholder="Nazwa gry"></textarea>\n    </mat-form-field>\n \n  <div id="map" ></div>\n\n\n  <button (click)="SendPath()">Wyślij</button>\n  <button (click)="BackToStart()">Toggle Menu</button>\n  <button (click)="ClearMap()">Clear Map</button>\n  <button id="myButton" (click)="changeTextColor()">Click Me!</button>\n\n</ion-content>\n\n\n\n'/*ion-inline-end:"C:\Users\Ja\Dysk Google\Aplikacje Mobilne\mapbox\myApp\src\pages\home\home.html"*/,
         }),
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["B" /* Injectable */])(),
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["E" /* Input */])(),
@@ -692,6 +697,21 @@ var HomePage = /** @class */ (function () {
     var _a, _b, _c;
 }());
 
+var Task = /** @class */ (function () {
+    /**
+     *
+     */
+    function Task(quest, answerA, answerB, answerC, checkbox1, checkbox2, checkbox3) {
+        this.quest = quest;
+        this.answerA = answerA;
+        this.answerB = answerB;
+        this.answerC = answerC;
+        this.checkbox1 = checkbox1;
+        this.checkbox2 = checkbox2;
+        this.checkbox3 = checkbox3;
+    }
+    return Task;
+}());
 //# sourceMappingURL=home.js.map
 
 /***/ }),
@@ -723,7 +743,7 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__angular_material_form_field__ = __webpack_require__(52);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__app_component__ = __webpack_require__(322);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_home_home__ = __webpack_require__(242);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__angular_material__ = __webpack_require__(332);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__angular_material__ = __webpack_require__(333);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__ionic_native_status_bar__ = __webpack_require__(233);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__ionic_native_splash_screen__ = __webpack_require__(237);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__pages_startmenu_startMenu__ = __webpack_require__(238);

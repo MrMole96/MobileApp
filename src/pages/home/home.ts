@@ -6,7 +6,7 @@ import * as MapboxDirections from '@mapbox/mapbox-gl-directions/dist/mapbox-gl-d
 import * as MapboxGeocoder from '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.min.js';
 import { LatLng } from 'leaflet';
 import { HtmlParser } from '@angular/compiler';
-
+import * as $ from 'jquery';
 // interface markersType
 // {
 //   lng: number,
@@ -45,12 +45,16 @@ export class HomePage implements OnInit {
   });
 
 
-  fakeArray: Array<any> = [];
+  buttonsArray: Array<any> = [];
+  questsArray: Array<any> = [];
   counter = 0
   constructor(public navCtrl: NavController, public http: HttpClient) {
     //mapboxgl.accessToken = 'pk.eyJ1Ijoicmlja2NhcmRkZGQiLCJhIjoiY2puYWd4cTU3MGc3azNycDh3dnllNWNtZyJ9.MTH5zn5hLiXz9jBvGadOVQ'
     Object.getOwnPropertyDescriptor(mapboxgl, "accessToken").set('pk.eyJ1Ijoicmlja2NhcmRkZGQiLCJhIjoiY2puYWd4cTU3MGc3azNycDh3dnllNWNtZyJ9.MTH5zn5hLiXz9jBvGadOVQ');
+   
+
   }
+
   ngOnInit() {
     // this.markers = this.mapService.getMarkers()
     this.initializeMap()
@@ -103,26 +107,18 @@ export class HomePage implements OnInit {
     //this.map.on('moveend', this.updateGeocoderProximity.bind(this)); // and then update proximity each time the map moves
 
   }
-  addMarker(event: any) {
-    //if (event.originalEvent.composedPath().length != 13) {
-
-
-    if (event.originalEvent.composedPath().length != 13) {
-      console.log('event stop')
-      console.log(event);
-      return false;
-    }
+  createPopUp(event: any) {
     var div = document.createElement('div')
     div.setAttribute("id", 'marker');
     var title = document.createElement('h2');
     title.textContent = 'Punkt';
     var div2 = document.createElement('div');
-    div2.setAttribute("id","task")
-  
+    div2.setAttribute("id", "task")
+
     var quest = document.createElement('input')
-    var answerA = document.createElement('input') 
+    var answerA = document.createElement('input')
     var answerB = document.createElement('input')
-    var answerC =document.createElement('input')
+    var answerC = document.createElement('input')
     quest.setAttribute('id', 'quest');
     quest.placeholder = 'zadanie';
     answerA.setAttribute('id', 'answerA')
@@ -133,7 +129,7 @@ export class HomePage implements OnInit {
     answerC.placeholder = 'odpowiedz C';
 
     var button1 = document.createElement('button');
-    button1.setAttribute('ion-button','');
+    button1.setAttribute('ion-button', '');
     button1.textContent = 'Zatwierdz';
 
     var radio1 = document.createElement('input');
@@ -141,20 +137,23 @@ export class HomePage implements OnInit {
     var radio3 = document.createElement('input');
 
 
-    radio1.setAttribute('type', 'radio');
+    radio1.setAttribute('type', 'checkbox');
     radio1.setAttribute('name', 'answer');
+    radio1.setAttribute('id', 'checkbox1');
 
-    radio2.setAttribute('type', 'radio');
+    radio2.setAttribute('type', 'checkbox');
     radio2.setAttribute('name', 'answer');
+    radio2.setAttribute('id', 'checkbox2');
 
-    radio3.setAttribute('type', 'radio');
+    radio3.setAttribute('type', 'checkbox');
     radio3.setAttribute('name', 'answer');
+    radio3.setAttribute('id', 'checkbox3');
 
     var button2 = document.createElement('button')
     button2.setAttribute("id", this.counter.toString())
     button2.textContent = 'kasuj ' + this.counter.toString()
 
-    
+
 
 
 
@@ -176,7 +175,7 @@ export class HomePage implements OnInit {
 
     div2.appendChild(button2);
 
-
+   
     let popup = new mapboxgl.Popup({ offset: 25 })
       .setDOMContent(div) // add popups
     this.marker = new mapboxgl.Marker({ draggable: true })
@@ -184,43 +183,41 @@ export class HomePage implements OnInit {
       .setPopup(popup)
       .addTo(this.map);
     this.delete(button2);
-    this.fakeArray.push(button2);
+    //wartosci z inputow sa w divie, zrobic funkcje ktora bedzie przechowywac te wartosci
+    this.buttonsArray.push(button2);
+    this.questsArray.push(div2.childNodes);
     this.markersPath.push(this.marker);
     this.counter = this.markersPath.length
 
+   
+  }
+  addMarker(event: any) {
+    //if (event.originalEvent.composedPath().length != 13) {
 
 
-    // this.directions.addWaypoint(this.index, [event.lngLat.lng, event.lngLat.lat]);
-    // this.index++;
-    // console.log( this.markersPath);
-    console.log('event start')
-
-
+    if (event.originalEvent.composedPath().length != 13) {
+      return false;
+    }
+    this.createPopUp(event);
     this.marker.on('dragend', this.onDragEnd.bind(this));
-
     this.getRoute();
+  
   }
   delete(button) {
     button.addEventListener('click', (e) => {
 
 
-      var target = e.target || e.srcElement || e.currentTarget;
-      var idAttr = target.attributes.id;
+      var targetButton = e.target || e.srcElement || e.currentTarget;
+      var idAttr = targetButton.attributes.id;
       var value = idAttr.nodeValue;
 
       //fakemarker = this.markersPath.find(x=>x.getLngLat().lat==event.lngLat.lat)
-      let index = this.fakeArray.indexOf(target)
-      console.log(this.fakeArray.indexOf(target))
-      console.log(this.fakeArray)
-      console.log(this.markersPath)
-      // index.remove();
-      console.log(this.markersPath[index])
+      let index = this.buttonsArray.indexOf(targetButton)
       this.markersPath[index].remove();
-      this.fakeArray.splice(index, 1);
+      this.buttonsArray.splice(index, 1);
       this.markersPath.splice(index, 1);
 
       this.getRoute();
-      console.log('dziala')
     })
   }
 
@@ -228,8 +225,7 @@ export class HomePage implements OnInit {
   onDragEnd() {
 
     var lngLat = this.marker.getLngLat();
-    console.log(lngLat);
-    console.log(this.markersPath);
+    console.log(this.questsArray);
     this.getRoute();
   }
   getRoute() {
@@ -268,9 +264,6 @@ export class HomePage implements OnInit {
     var directionsRequest = 'https://api.mapbox.com/directions/v5/mapbox/walking/' + element + '?geometries=geojson&access_token=' + mapboxgl.accessToken;
     this.http.get(directionsRequest).subscribe((data: any) => {
       var route = data.routes[0].geometry;
-      console.log('start ', start)
-      console.log('route ', route)
-      console.log('end ', end)
       this.startLane = {
         id: 'start',
         type: 'circle',
@@ -318,8 +311,6 @@ export class HomePage implements OnInit {
       this.map.addLayer(this.finishLane);
 
       this.distance = data.routes[0].distance;
-
-      console.log("dystans " + data.routes[0].distance);
     })
   }
 
@@ -350,14 +341,24 @@ export class HomePage implements OnInit {
 
     this.markersPath.map(x => x.remove());
     this.markersPath = [];
-    this.fakeArray = [];
-    console.log('aa');
+    this.buttonsArray = [];
+    this.questsArray = [];
+  }
+  changeTextColor() {
+    $('#myButton').text('white');
   }
 
   SendPath() {
-    console.log(this.markersPath.map(x => x.getLngLat()));
+    console.log(this.questsArray);
+    console.log(this.questsArray[0].input)
+let tasks = Array<Task>();
+this.questsArray.forEach(element => {
+  tasks.push(new Task(element[0].value,element[1].value,element[2].checked,element[3].value,element[4].checked,element[5].value,element[6].checked)) ;
+});
+console.log(tasks);
     this.http.post('http://127.0.0.1:3456/', {
       info: 'sent request',
+      Tasks: tasks,
       totalDistance: this.distance,
       gameName: this.gameName,
       MarkersPath: this.markersPath.map(x => x.getLngLat())
@@ -368,4 +369,28 @@ export class HomePage implements OnInit {
 
 
   }
+
 }
+class Task{
+  quest: string;
+  answerA: string;
+  answerB: string;
+  answerC: string;
+  checkbox1: boolean;
+  checkbox2: boolean;
+  checkbox3: boolean;
+  /**
+   *
+   */
+  constructor(quest,answerA,answerB,answerC,checkbox1,checkbox2,checkbox3) {
+    this.quest = quest;
+    this.answerA = answerA;
+    this.answerB = answerB;
+    this.answerC = answerC;
+    this.checkbox1 = checkbox1;
+    this.checkbox2 = checkbox2;
+    this.checkbox3 = checkbox3;
+    
+  }
+}
+

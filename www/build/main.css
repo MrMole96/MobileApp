@@ -25705,6 +25705,10 @@ ion-navbar.toolbar {
   text-align: center;
 }
 
+#task > button {
+  margin: 5px;
+}
+
 #quest {
   width: 100%;
 }
