@@ -487,13 +487,13 @@ var HomePage = /** @class */ (function () {
         var radio3 = document.createElement('input');
         radio1.setAttribute('type', 'checkbox');
         radio1.setAttribute('name', 'answer');
-        radio1.setAttribute('id', 'checkbox1');
+        radio1.setAttribute('id', 'checkboxA');
         radio2.setAttribute('type', 'checkbox');
         radio2.setAttribute('name', 'answer');
-        radio2.setAttribute('id', 'checkbox2');
+        radio2.setAttribute('id', 'checkboxB');
         radio3.setAttribute('type', 'checkbox');
         radio3.setAttribute('name', 'answer');
-        radio3.setAttribute('id', 'checkbox3');
+        radio3.setAttribute('id', 'checkboxC');
         var button2 = document.createElement('button');
         button2.setAttribute("id", this.counter.toString());
         button2.textContent = 'kasuj ' + this.counter.toString();
@@ -701,14 +701,14 @@ var Task = /** @class */ (function () {
     /**
      *
      */
-    function Task(quest, answerA, answerB, answerC, checkbox1, checkbox2, checkbox3) {
+    function Task(quest, answerA, checkboxA, answerB, checkboxB, answerC, checkboxC) {
         this.quest = quest;
         this.answerA = answerA;
         this.answerB = answerB;
         this.answerC = answerC;
-        this.checkbox1 = checkbox1;
-        this.checkbox2 = checkbox2;
-        this.checkbox3 = checkbox3;
+        this.checkboxA = checkboxA;
+        this.checkboxB = checkboxB;
+        this.checkboxC = checkboxC;
     }
     return Task;
 }());
