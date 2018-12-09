@@ -332,21 +332,57 @@ var GameComponent = /** @class */ (function () {
         });
     };
     GameComponent.prototype.addMarker = function (event) {
+        var div = document.createElement('div');
+        div.setAttribute("id", 'marker');
+        var quest = document.createElement('h4');
+        var answerA = document.createElement('input');
+        var answerB = document.createElement('input');
+        var answerC = document.createElement('input');
+        var labelA = document.createElement('label');
+        var labelB = document.createElement('label');
+        var labelC = document.createElement('label');
+        labelA.setAttribute('for', 'checkboxA');
+        labelB.setAttribute('for', 'checkboxB');
+        labelC.setAttribute('for', 'checkboxC');
+        answerA.setAttribute('type', 'checkbox');
+        answerA.setAttribute('name', 'checkboxA');
+        answerA.setAttribute('id', 'checkboxA');
+        answerB.setAttribute('type', 'checkbox');
+        answerB.setAttribute('name', 'checkboxB');
+        answerB.setAttribute('id', 'checkboxB');
+        answerC.setAttribute('type', 'checkbox');
+        answerC.setAttribute('name', 'checkboxC');
+        answerC.setAttribute('id', 'checkboxC');
+        //
+        quest.textContent = "to jest test";
+        labelA.textContent = 'test';
+        ///
+        div.appendChild(quest);
+        div.appendChild(answerA);
+        div.appendChild(labelA);
+        div.appendChild(answerB);
+        div.appendChild(labelB);
+        div.appendChild(answerC);
+        div.appendChild(labelC);
+        var popup = new __WEBPACK_IMPORTED_MODULE_1_mapbox_gl__["Popup"]({ offset: 25 })
+            .setDOMContent(div); // add popups
         var marker = new __WEBPACK_IMPORTED_MODULE_1_mapbox_gl__["Marker"]()
             .setLngLat([event.lng, event.lat])
+            .setPopup(popup)
             .addTo(this.map);
     };
     __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_9" /* ViewChild */])('map'),
-        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["t" /* ElementRef */])
+        __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["t" /* ElementRef */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["t" /* ElementRef */]) === "function" && _a || Object)
     ], GameComponent.prototype, "mapContainer", void 0);
     GameComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'app-game',template:/*ion-inline-start:"C:\Users\Ja\Dysk Google\Aplikacje Mobilne\mapbox\myApp\src\pages\game\game.html"*/'<ion-header>\n\n    <ion-navbar>\n\n      <button ion-button menuToggle>\n\n        <ion-icon name="menu"></ion-icon>\n\n      </button>\n\n      <ion-title>{{name}}</ion-title>\n\n    </ion-navbar>\n\n  </ion-header>\n\n  <h4>Dystans trasy: {{distance}}</h4>\n\n  <ion-content padding>\n\n    <div id="map"></div>\n\n  </ion-content>\n\n'/*ion-inline-end:"C:\Users\Ja\Dysk Google\Aplikacje Mobilne\mapbox\myApp\src\pages\game\game.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__angular_common_http__["a" /* HttpClient */]])
+        __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__angular_common_http__["a" /* HttpClient */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_common_http__["a" /* HttpClient */]) === "function" && _b || Object])
     ], GameComponent);
     return GameComponent;
+    var _a, _b;
 }());
 
 //# sourceMappingURL=game.js.map
@@ -683,7 +719,7 @@ var HomePage = /** @class */ (function () {
     };
     __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_9" /* ViewChild */])('map'),
-        __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["t" /* ElementRef */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["t" /* ElementRef */]) === "function" && _a || Object)
+        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["t" /* ElementRef */])
     ], HomePage.prototype, "mapContainer", void 0);
     HomePage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
@@ -691,10 +727,9 @@ var HomePage = /** @class */ (function () {
         }),
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["B" /* Injectable */])(),
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["E" /* Input */])(),
-        __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* NavController */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__angular_common_http__["a" /* HttpClient */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_common_http__["a" /* HttpClient */]) === "function" && _c || Object])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* NavController */], __WEBPACK_IMPORTED_MODULE_2__angular_common_http__["a" /* HttpClient */]])
     ], HomePage);
     return HomePage;
-    var _a, _b, _c;
 }());
 
 var Task = /** @class */ (function () {

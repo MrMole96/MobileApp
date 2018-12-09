@@ -119,8 +119,50 @@ export class GameComponent implements OnInit {
         console.log(path);
     }
     addMarker(event) {
+        var div = document.createElement('div')
+        div.setAttribute("id", 'marker');
+        var quest = document.createElement('h4')
+        var answerA = document.createElement('input')
+        var answerB = document.createElement('input')
+        var answerC = document.createElement('input')
+
+        var labelA = document.createElement('label')
+        var labelB = document.createElement('label')
+        var labelC = document.createElement('label')
+
+        labelA.setAttribute('for', 'checkboxA')
+        labelB.setAttribute('for', 'checkboxB')
+        labelC.setAttribute('for', 'checkboxC')
+
+        answerA.setAttribute('type', 'checkbox');
+        answerA.setAttribute('name', 'checkboxA');
+        answerA.setAttribute('id', 'checkboxA');
+
+        answerB.setAttribute('type', 'checkbox');
+        answerB.setAttribute('name', 'checkboxB');
+        answerB.setAttribute('id', 'checkboxB');
+
+        answerC.setAttribute('type', 'checkbox');
+        answerC.setAttribute('name', 'checkboxC');
+        answerC.setAttribute('id', 'checkboxC');
+
+//
+quest.textContent= "to jest test"
+labelA.textContent = 'test'
+///
+        div.appendChild(quest);
+        div.appendChild(answerA);
+        div.appendChild(labelA);
+        div.appendChild(answerB);
+        div.appendChild(labelB);
+        div.appendChild(answerC);
+        div.appendChild(labelC);
+
+        let popup = new mapboxgl.Popup({ offset: 25 })
+            .setDOMContent(div) // add popups
         let marker = new mapboxgl.Marker()
             .setLngLat([event.lng, event.lat])
+            .setPopup(popup)
             .addTo(this.map);
     }
 
