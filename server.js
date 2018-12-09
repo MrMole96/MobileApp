@@ -20,30 +20,25 @@ app.use(cors());
 
 
 
-function Path(distance, name, path) {
+function Path(distance, name, path, tasks) {
     this.distance = distance,
         this.name = name,
         this.array = path
+        this.tasks = tasks
 };
 
-var examplePath = [];
+var examplePath =[]
 var distance = 0;
-
+var gameName = "";
 app.get('/', (req, res, next) => {
     res.json({
         'example': examplePath,
-        distance
     });
-    // res.send(JSON.stringify(examplePath))
     console.log('loaded data  ' + examplePath);
 });
 app.post('/', (req, res, next) => {
     // console.log(req.body);
-    examplePath.push(new Path(req.body.totalDistance,'aaa',req.body.MarkersPath))
-    distance = req.body.totalDistance
-    console.log(req.body.MarkersPath)
-
-    console.log('example path ' + examplePath)
+    examplePath.push(new Path(req.body.totalDistance, req.body.gameName, req.body.MarkersPath, req.body.Tasks))
     res.send('Server responed');
 });
 var server = app.listen(3456, "127.0.0.1", function () {
