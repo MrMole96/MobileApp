@@ -25713,6 +25713,11 @@ input[type="radio"] {
   margin: 5px;
 }
 
+#accept {
+  margin: 0 auto;
+  display: block;
+}
+
 .example-form {
   min-width: 150px;
   max-width: 500px;

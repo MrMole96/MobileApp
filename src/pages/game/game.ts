@@ -18,6 +18,14 @@ export class GameComponent implements OnInit {
     startLane: any;
     pathLane: any;
     finishLane: any;
+
+
+    data = JSON.parse(localStorage.getItem('loadedPath'));
+    numberPath = JSON.parse(localStorage.getItem('index'))
+    index = 0;
+    counter = 0;
+    buttonsArray: Array<any> = [];
+    uniqueArray: Array<any> = [];
     constructor(public http: HttpClient) {
         Object.getOwnPropertyDescriptor(mapboxgl, "accessToken").set('pk.eyJ1Ijoicmlja2NhcmRkZGQiLCJhIjoiY2puYWd4cTU3MGc3azNycDh3dnllNWNtZyJ9.MTH5zn5hLiXz9jBvGadOVQ');
     }
@@ -45,78 +53,96 @@ export class GameComponent implements OnInit {
 
         await this.sleep(2000)
 
-        let data = JSON.parse(localStorage.getItem('loadedPath'));
-        let numberPath = JSON.parse(localStorage.getItem('index'))
-        let last = data[numberPath].array.length - 1;
-        let start = data[numberPath].array[0];
-        let end = data[numberPath].array[last];
+        let pathArray = [];
+
+
+
+        let last = pathArray.length - 1;
+        let start = pathArray[0];
+        let end = pathArray[last];
         let path = "";
-        for (let index = 0; index < data[numberPath].array.length; index++) {
-            if (index != data[numberPath].array.length - 1) {
-                path += data[numberPath].array[index].lng + ',' + data[numberPath].array[index].lat + ';';
-            } else {
-                path += data[numberPath].array[index].lng + ',' + data[numberPath].array[index].lat;
+        //this.addMarker(this.data[this.numberPath].array[index]);
+        for (let index = 0; index <= this.counter; index++) {
+
+
+            pathArray.push(this.data[this.numberPath].array[index]);
+            console.log('index ', index)
+
+            console.log(pathArray)
+
+            if (index == pathArray.length || index == 0) {
+                path += pathArray[index].lng + ',' + pathArray[index].lat;
+            } else if (index != pathArray.length) {
+                path += ';' + pathArray[index].lng + ',' + pathArray[index].lat;
             }
-            this.addMarker(data[numberPath].array[index]);
+            console.log('path ', path)
+            if (this.counter == index) {
+                this.addMarker(pathArray[index]);
+                var directionsRequest = 'https://api.mapbox.com/directions/v5/mapbox/walking/' + path + '?geometries=geojson&access_token=' + mapboxgl.accessToken;
+                this.http.get(directionsRequest).subscribe((data: any) => {
+                    var route = data.routes[0].geometry.coordinates;
+
+                    this.startLane = {
+                        id: 'start',
+                        type: 'circle',
+                        source: {
+                            type: 'geojson',
+                            data: {
+                                type: 'Feature',
+                                geometry: {
+                                    type: 'Point',
+                                    coordinates: start
+                                }
+                            }
+                        }
+                    }
+                    this.pathLane = {
+                        id: 'route',
+                        type: 'line',
+                        source: {
+                            type: 'geojson',
+                            data: {
+                                type: 'Feature',
+                                geometry: {
+                                    type: 'LineString',
+                                    coordinates: route
+                                }
+
+                            }
+                        },
+                        paint: {
+                            'line-width': 3
+                        }
+                    }
+                    this.finishLane = {
+                        id: 'end',
+                        type: 'circle',
+                        source: {
+                            type: 'geojson',
+                            data: {
+                                type: 'Feature',
+                                geometry: {
+                                    type: 'Point',
+                                    coordinates: end
+                                }
+                            }
+                        }
+                    }
+                    if (this.map.getLayer('route') != null) {
+                        this.map.removeLayer('start');
+                        this.map.removeLayer('end');
+                        this.map.removeLayer('route');
+                        this.map.removeSource('start');
+                        this.map.removeSource('end');
+                        this.map.removeSource('route');
+                    }
+                    this.map.addLayer(this.pathLane);
+                    this.map.addLayer(this.startLane);
+                    this.map.addLayer(this.finishLane);
+                })
+            }
+
         }
-        console.log('array path', path);
-        var directionsRequest = 'https://api.mapbox.com/directions/v5/mapbox/walking/' + path + '?geometries=geojson&access_token=' + mapboxgl.accessToken;
-        this.http.get(directionsRequest).subscribe((data: any) => {
-            var route = data.routes[0].geometry.coordinates;
-
-            this.startLane = {
-                id: 'start',
-                type: 'circle',
-                source: {
-                    type: 'geojson',
-                    data: {
-                        type: 'Feature',
-                        geometry: {
-                            type: 'Point',
-                            coordinates: start
-                        }
-                    }
-                }
-            }
-            this.pathLane = {
-                id: 'route',
-                type: 'line',
-                source: {
-                    type: 'geojson',
-                    data: {
-                        type: 'Feature',
-                        geometry: {
-                            type: 'LineString',
-                            coordinates: route
-                        }
-
-                    }
-                },
-                paint: {
-                    'line-width': 3
-                }
-            }
-            this.finishLane = {
-                id: 'end',
-                type: 'circle',
-                source: {
-                    type: 'geojson',
-                    data: {
-                        type: 'Feature',
-                        geometry: {
-                            type: 'Point',
-                            coordinates: end
-                        }
-                    }
-                }
-            }
-
-            this.map.addLayer(this.pathLane);
-            this.map.addLayer(this.startLane);
-            this.map.addLayer(this.finishLane);
-        })
-
-        console.log(path);
     }
     addMarker(event) {
         var div = document.createElement('div')
@@ -146,10 +172,15 @@ export class GameComponent implements OnInit {
         answerC.setAttribute('name', 'checkboxC');
         answerC.setAttribute('id', 'checkboxC');
 
-//
-quest.textContent= "to jest test"
-labelA.textContent = 'test'
-///
+
+
+        var button = document.createElement('button');
+        button.setAttribute('id', this.counter.toString());
+        button.textContent = 'Zatwierdz';
+        //
+        quest.textContent = "to jest test"
+        labelA.textContent = 'test'
+        ///
         div.appendChild(quest);
         div.appendChild(answerA);
         div.appendChild(labelA);
@@ -157,6 +188,16 @@ labelA.textContent = 'test'
         div.appendChild(labelB);
         div.appendChild(answerC);
         div.appendChild(labelC);
+        div.appendChild(button);
+
+        let task = this.data[this.numberPath].tasks[this.index]
+        quest.textContent = task.quest;
+        //answerA.checked = task.checkboxA;
+        labelA.textContent = task.answerA;
+        //answerB.textContent = task.checkboxB;
+        labelB.textContent = task.answerB;
+        //answerC.textContent = task.checkboxC;
+        labelC.textContent = task.answerC;
 
         let popup = new mapboxgl.Popup({ offset: 25 })
             .setDOMContent(div) // add popups
@@ -164,8 +205,21 @@ labelA.textContent = 'test'
             .setLngLat([event.lng, event.lat])
             .setPopup(popup)
             .addTo(this.map);
+        this.accept(button);
+
+
     }
+    accept(button) {
+        button.addEventListener('click', (e) => {
+            if (this.buttonsArray.indexOf(button.id) == -1) {
+                this.buttonsArray.push(button.id);
+                //zrobic zabezpieczenie zeby nie wykraczac poza index tablicy na ostanim punkcie
+                console.log('button ', button.id);
+                this.index++;
+                this.counter++;
 
-
-
+                this.loadData();
+            }
+        })
+    }
 }

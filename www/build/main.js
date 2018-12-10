@@ -230,6 +230,12 @@ var GameComponent = /** @class */ (function () {
         this.lat = 37.75;
         this.lng = -122.41;
         this.name = "cos";
+        this.data = JSON.parse(localStorage.getItem('loadedPath'));
+        this.numberPath = JSON.parse(localStorage.getItem('index'));
+        this.index = 0;
+        this.counter = 0;
+        this.buttonsArray = [];
+        this.uniqueArray = [];
         Object.getOwnPropertyDescriptor(__WEBPACK_IMPORTED_MODULE_1_mapbox_gl__, "accessToken").set('pk.eyJ1Ijoicmlja2NhcmRkZGQiLCJhIjoiY2puYWd4cTU3MGc3azNycDh3dnllNWNtZyJ9.MTH5zn5hLiXz9jBvGadOVQ');
     }
     GameComponent.prototype.ngOnInit = function () {
@@ -251,81 +257,93 @@ var GameComponent = /** @class */ (function () {
     GameComponent.prototype.loadData = function () {
         return __awaiter(this, void 0, void 0, function () {
             var _this = this;
-            var data, numberPath, last, start, end, path, index, directionsRequest;
+            var pathArray, last, start, end, path, index, directionsRequest;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, this.sleep(2000)];
                     case 1:
                         _a.sent();
-                        data = JSON.parse(localStorage.getItem('loadedPath'));
-                        numberPath = JSON.parse(localStorage.getItem('index'));
-                        last = data[numberPath].array.length - 1;
-                        start = data[numberPath].array[0];
-                        end = data[numberPath].array[last];
+                        pathArray = [];
+                        last = pathArray.length - 1;
+                        start = pathArray[0];
+                        end = pathArray[last];
                         path = "";
-                        for (index = 0; index < data[numberPath].array.length; index++) {
-                            if (index != data[numberPath].array.length - 1) {
-                                path += data[numberPath].array[index].lng + ',' + data[numberPath].array[index].lat + ';';
+                        //this.addMarker(this.data[this.numberPath].array[index]);
+                        for (index = 0; index <= this.counter; index++) {
+                            pathArray.push(this.data[this.numberPath].array[index]);
+                            console.log('index ', index);
+                            console.log(pathArray);
+                            if (index == pathArray.length || index == 0) {
+                                path += pathArray[index].lng + ',' + pathArray[index].lat;
                             }
-                            else {
-                                path += data[numberPath].array[index].lng + ',' + data[numberPath].array[index].lat;
+                            else if (index != pathArray.length) {
+                                path += ';' + pathArray[index].lng + ',' + pathArray[index].lat;
                             }
-                            this.addMarker(data[numberPath].array[index]);
+                            console.log('path ', path);
+                            if (this.counter == index) {
+                                this.addMarker(pathArray[index]);
+                                directionsRequest = 'https://api.mapbox.com/directions/v5/mapbox/walking/' + path + '?geometries=geojson&access_token=' + __WEBPACK_IMPORTED_MODULE_1_mapbox_gl__["accessToken"];
+                                this.http.get(directionsRequest).subscribe(function (data) {
+                                    var route = data.routes[0].geometry.coordinates;
+                                    _this.startLane = {
+                                        id: 'start',
+                                        type: 'circle',
+                                        source: {
+                                            type: 'geojson',
+                                            data: {
+                                                type: 'Feature',
+                                                geometry: {
+                                                    type: 'Point',
+                                                    coordinates: start
+                                                }
+                                            }
+                                        }
+                                    };
+                                    _this.pathLane = {
+                                        id: 'route',
+                                        type: 'line',
+                                        source: {
+                                            type: 'geojson',
+                                            data: {
+                                                type: 'Feature',
+                                                geometry: {
+                                                    type: 'LineString',
+                                                    coordinates: route
+                                                }
+                                            }
+                                        },
+                                        paint: {
+                                            'line-width': 3
+                                        }
+                                    };
+                                    _this.finishLane = {
+                                        id: 'end',
+                                        type: 'circle',
+                                        source: {
+                                            type: 'geojson',
+                                            data: {
+                                                type: 'Feature',
+                                                geometry: {
+                                                    type: 'Point',
+                                                    coordinates: end
+                                                }
+                                            }
+                                        }
+                                    };
+                                    if (_this.map.getLayer('route') != null) {
+                                        _this.map.removeLayer('start');
+                                        _this.map.removeLayer('end');
+                                        _this.map.removeLayer('route');
+                                        _this.map.removeSource('start');
+                                        _this.map.removeSource('end');
+                                        _this.map.removeSource('route');
+                                    }
+                                    _this.map.addLayer(_this.pathLane);
+                                    _this.map.addLayer(_this.startLane);
+                                    _this.map.addLayer(_this.finishLane);
+                                });
+                            }
                         }
-                        console.log('array path', path);
-                        directionsRequest = 'https://api.mapbox.com/directions/v5/mapbox/walking/' + path + '?geometries=geojson&access_token=' + __WEBPACK_IMPORTED_MODULE_1_mapbox_gl__["accessToken"];
-                        this.http.get(directionsRequest).subscribe(function (data) {
-                            var route = data.routes[0].geometry.coordinates;
-                            _this.startLane = {
-                                id: 'start',
-                                type: 'circle',
-                                source: {
-                                    type: 'geojson',
-                                    data: {
-                                        type: 'Feature',
-                                        geometry: {
-                                            type: 'Point',
-                                            coordinates: start
-                                        }
-                                    }
-                                }
-                            };
-                            _this.pathLane = {
-                                id: 'route',
-                                type: 'line',
-                                source: {
-                                    type: 'geojson',
-                                    data: {
-                                        type: 'Feature',
-                                        geometry: {
-                                            type: 'LineString',
-                                            coordinates: route
-                                        }
-                                    }
-                                },
-                                paint: {
-                                    'line-width': 3
-                                }
-                            };
-                            _this.finishLane = {
-                                id: 'end',
-                                type: 'circle',
-                                source: {
-                                    type: 'geojson',
-                                    data: {
-                                        type: 'Feature',
-                                        geometry: {
-                                            type: 'Point',
-                                            coordinates: end
-                                        }
-                                    }
-                                }
-                            };
-                            _this.map.addLayer(_this.pathLane);
-                            _this.map.addLayer(_this.startLane);
-                            _this.map.addLayer(_this.finishLane);
-                        });
-                        console.log(path);
                         return [2 /*return*/];
                 }
             });
@@ -353,6 +371,9 @@ var GameComponent = /** @class */ (function () {
         answerC.setAttribute('type', 'checkbox');
         answerC.setAttribute('name', 'checkboxC');
         answerC.setAttribute('id', 'checkboxC');
+        var button = document.createElement('button');
+        button.setAttribute('id', this.counter.toString());
+        button.textContent = 'Zatwierdz';
         //
         quest.textContent = "to jest test";
         labelA.textContent = 'test';
@@ -364,12 +385,35 @@ var GameComponent = /** @class */ (function () {
         div.appendChild(labelB);
         div.appendChild(answerC);
         div.appendChild(labelC);
+        div.appendChild(button);
+        var task = this.data[this.numberPath].tasks[this.index];
+        quest.textContent = task.quest;
+        //answerA.checked = task.checkboxA;
+        labelA.textContent = task.answerA;
+        //answerB.textContent = task.checkboxB;
+        labelB.textContent = task.answerB;
+        //answerC.textContent = task.checkboxC;
+        labelC.textContent = task.answerC;
         var popup = new __WEBPACK_IMPORTED_MODULE_1_mapbox_gl__["Popup"]({ offset: 25 })
             .setDOMContent(div); // add popups
         var marker = new __WEBPACK_IMPORTED_MODULE_1_mapbox_gl__["Marker"]()
             .setLngLat([event.lng, event.lat])
             .setPopup(popup)
             .addTo(this.map);
+        this.accept(button);
+    };
+    GameComponent.prototype.accept = function (button) {
+        var _this = this;
+        button.addEventListener('click', function (e) {
+            if (_this.buttonsArray.indexOf(button.id) == -1) {
+                _this.buttonsArray.push(button.id);
+                //zrobic zabezpieczenie zeby nie wykraczac poza index tablicy na ostanim punkcie
+                console.log('button ', button.id);
+                _this.index++;
+                _this.counter++;
+                _this.loadData();
+            }
+        });
     };
     __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_9" /* ViewChild */])('map'),
