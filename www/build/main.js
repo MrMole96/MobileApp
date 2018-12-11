@@ -409,9 +409,11 @@ var GameComponent = /** @class */ (function () {
                 _this.buttonsArray.push(button.id);
                 //zrobic zabezpieczenie zeby nie wykraczac poza index tablicy na ostanim punkcie
                 console.log('button ', button.id);
-                _this.index++;
-                _this.counter++;
-                _this.loadData();
+                if (_this.counter != _this.data[_this.numberPath].array.length - 1) {
+                    _this.index++;
+                    _this.counter++;
+                    _this.loadData();
+                }
             }
         });
     };

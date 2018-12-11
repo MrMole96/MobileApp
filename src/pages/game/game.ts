@@ -215,10 +215,14 @@ export class GameComponent implements OnInit {
                 this.buttonsArray.push(button.id);
                 //zrobic zabezpieczenie zeby nie wykraczac poza index tablicy na ostanim punkcie
                 console.log('button ', button.id);
-                this.index++;
-                this.counter++;
 
-                this.loadData();
+                if(this.counter != this.data[this.numberPath].array.length -1 ){
+                    this.index++;
+                    this.counter++;
+    
+                    this.loadData();
+                }
+             
             }
         })
     }
