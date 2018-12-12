@@ -51,7 +51,7 @@ export class HomePage implements OnInit {
   constructor(public navCtrl: NavController, public http: HttpClient) {
     //mapboxgl.accessToken = 'pk.eyJ1Ijoicmlja2NhcmRkZGQiLCJhIjoiY2puYWd4cTU3MGc3azNycDh3dnllNWNtZyJ9.MTH5zn5hLiXz9jBvGadOVQ'
     Object.getOwnPropertyDescriptor(mapboxgl, "accessToken").set('pk.eyJ1Ijoicmlja2NhcmRkZGQiLCJhIjoiY2puYWd4cTU3MGc3azNycDh3dnllNWNtZyJ9.MTH5zn5hLiXz9jBvGadOVQ');
-   
+
 
   }
 
@@ -128,9 +128,6 @@ export class HomePage implements OnInit {
     answerB.placeholder = 'odpowiedz B';
     answerC.placeholder = 'odpowiedz C';
 
-    var button1 = document.createElement('button');
-    button1.setAttribute('ion-button', '');
-    button1.textContent = 'Zatwierdz';
 
     var radio1 = document.createElement('input');
     var radio2 = document.createElement('input');
@@ -151,7 +148,7 @@ export class HomePage implements OnInit {
 
     var button2 = document.createElement('button')
     button2.setAttribute("id", this.counter.toString())
-    button2.textContent = 'kasuj ' + this.counter.toString()
+    button2.textContent = 'kasuj ';
 
 
 
@@ -170,12 +167,9 @@ export class HomePage implements OnInit {
     div2.appendChild(answerC);
     div2.appendChild(radio3);
 
-    div2.appendChild(button1);
-
-
     div2.appendChild(button2);
 
-   
+
     let popup = new mapboxgl.Popup({ offset: 25 })
       .setDOMContent(div) // add popups
     this.marker = new mapboxgl.Marker({ draggable: true })
@@ -189,7 +183,7 @@ export class HomePage implements OnInit {
     this.markersPath.push(this.marker);
     this.counter = this.markersPath.length
 
-   
+
   }
   addMarker(event: any) {
     //if (event.originalEvent.composedPath().length != 13) {
@@ -201,7 +195,7 @@ export class HomePage implements OnInit {
     this.createPopUp(event);
     this.marker.on('dragend', this.onDragEnd.bind(this));
     this.getRoute();
-  
+
   }
   delete(button) {
     button.addEventListener('click', (e) => {
@@ -331,31 +325,32 @@ export class HomePage implements OnInit {
     this.directions.onRemove(this.map);
   }
   ClearMap() {
-    //this.directions.removeRoutes();
-    this.map.removeLayer('start');
-    this.map.removeLayer('route');
-    this.map.removeLayer('end');
-    this.map.removeSource('start');
-    this.map.removeSource('route');
-    this.map.removeSource('end');
 
-    this.markersPath.map(x => x.remove());
-    this.markersPath = [];
-    this.buttonsArray = [];
-    this.questsArray = [];
+    if (this.markersPath.length > 1 ) {
+      this.map.removeLayer('start');
+      this.map.removeLayer('route');
+      this.map.removeLayer('end');
+      this.map.removeSource('start');
+      this.map.removeSource('route');
+      this.map.removeSource('end');
+
+      this.markersPath.map(x => x.remove());
+      this.markersPath = [];
+      this.buttonsArray = [];
+      this.questsArray = [];
+    }
   }
   changeTextColor() {
     $('#myButton').text('white');
   }
 
   SendPath() {
-    console.log(this.questsArray);
-    console.log(this.questsArray[0].input)
-let tasks = Array<Task>();
-this.questsArray.forEach(element => {
-  tasks.push(new Task(element[0].value,element[1].value,element[2].checked,element[3].value,element[4].checked,element[5].value,element[6].checked)) ;
-});
-console.log(tasks);
+
+    let tasks = Array<Task>();
+    this.questsArray.forEach(element => {
+      tasks.push(new Task(element[0].value, element[1].value, element[2].checked, element[3].value, element[4].checked, element[5].value, element[6].checked));
+    });
+    console.log(tasks);
     this.http.post('http://127.0.0.1:3456/', {
       info: 'sent request',
       Tasks: tasks,
@@ -366,12 +361,12 @@ console.log(tasks);
       console.log(JSON.stringify(res));
     });
 
-
+    this.ClearMap();
 
   }
 
 }
-class Task{
+class Task {
   quest: string;
   answerA: string;
   answerB: string;
@@ -382,7 +377,7 @@ class Task{
   /**
    *
    */
-  constructor(quest,answerA,checkboxA,answerB,checkboxB,answerC,checkboxC) {
+  constructor(quest, answerA, checkboxA, answerB, checkboxB, answerC, checkboxC) {
     this.quest = quest;
     this.answerA = answerA;
     this.answerB = answerB;
@@ -390,7 +385,7 @@ class Task{
     this.checkboxA = checkboxA;
     this.checkboxB = checkboxB;
     this.checkboxC = checkboxC;
-    
+
   }
 }
 

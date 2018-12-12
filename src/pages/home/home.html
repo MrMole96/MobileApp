@@ -7,23 +7,22 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content  padding>
   <h3>Ionic Menu Starter</h3>
 
- <button ion-button>a</button>
 
 
-    <mat-form-field class="example-full-width">
-      <textarea [(ngModel)]="gameName" matInput placeholder="Nazwa gry"></textarea>
-    </mat-form-field>
+ <ion-item>
+  <ion-label color="primary">Nazwa gry</ion-label>
+  <ion-input [(ngModel)]="gameName" placeholder="Text Input"></ion-input>
+</ion-item>
+
  
   <div id="map" ></div>
 
 
-  <button (click)="SendPath()">Wyślij</button>
-  <button (click)="BackToStart()">Toggle Menu</button>
-  <button (click)="ClearMap()">Clear Map</button>
-  <button id="myButton" (click)="changeTextColor()">Click Me!</button>
+  <button ion-button color="secondary" (click)="SendPath()" small round>Round Button</button>
+  <button ion-button color="warning" (click)="ClearMap()">Clear Map</button>
 
 </ion-content>
 

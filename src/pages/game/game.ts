@@ -213,8 +213,6 @@ export class GameComponent implements OnInit {
         button.addEventListener('click', (e) => {
             if (this.buttonsArray.indexOf(button.id) == -1) {
                 this.buttonsArray.push(button.id);
-                //zrobic zabezpieczenie zeby nie wykraczac poza index tablicy na ostanim punkcie
-                console.log('button ', button.id);
 
                 if(this.counter != this.data[this.numberPath].array.length -1 ){
                     this.index++;

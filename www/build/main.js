@@ -407,8 +407,6 @@ var GameComponent = /** @class */ (function () {
         button.addEventListener('click', function (e) {
             if (_this.buttonsArray.indexOf(button.id) == -1) {
                 _this.buttonsArray.push(button.id);
-                //zrobic zabezpieczenie zeby nie wykraczac poza index tablicy na ostanim punkcie
-                console.log('button ', button.id);
                 if (_this.counter != _this.data[_this.numberPath].array.length - 1) {
                     _this.index++;
                     _this.counter++;
@@ -419,16 +417,15 @@ var GameComponent = /** @class */ (function () {
     };
     __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_9" /* ViewChild */])('map'),
-        __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["t" /* ElementRef */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["t" /* ElementRef */]) === "function" && _a || Object)
+        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["t" /* ElementRef */])
     ], GameComponent.prototype, "mapContainer", void 0);
     GameComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'app-game',template:/*ion-inline-start:"C:\Users\Ja\Dysk Google\Aplikacje Mobilne\mapbox\myApp\src\pages\game\game.html"*/'<ion-header>\n\n    <ion-navbar>\n\n      <button ion-button menuToggle>\n\n        <ion-icon name="menu"></ion-icon>\n\n      </button>\n\n      <ion-title>{{name}}</ion-title>\n\n    </ion-navbar>\n\n  </ion-header>\n\n  <h4>Dystans trasy: {{distance}}</h4>\n\n  <ion-content padding>\n\n    <div id="map"></div>\n\n  </ion-content>\n\n'/*ion-inline-end:"C:\Users\Ja\Dysk Google\Aplikacje Mobilne\mapbox\myApp\src\pages\game\game.html"*/,
         }),
-        __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__angular_common_http__["a" /* HttpClient */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_common_http__["a" /* HttpClient */]) === "function" && _b || Object])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__angular_common_http__["a" /* HttpClient */]])
     ], GameComponent);
     return GameComponent;
-    var _a, _b;
 }());
 
 //# sourceMappingURL=game.js.map
@@ -561,9 +558,6 @@ var HomePage = /** @class */ (function () {
         answerA.placeholder = 'odpowiedz A';
         answerB.placeholder = 'odpowiedz B';
         answerC.placeholder = 'odpowiedz C';
-        var button1 = document.createElement('button');
-        button1.setAttribute('ion-button', '');
-        button1.textContent = 'Zatwierdz';
         var radio1 = document.createElement('input');
         var radio2 = document.createElement('input');
         var radio3 = document.createElement('input');
@@ -578,7 +572,7 @@ var HomePage = /** @class */ (function () {
         radio3.setAttribute('id', 'checkboxC');
         var button2 = document.createElement('button');
         button2.setAttribute("id", this.counter.toString());
-        button2.textContent = 'kasuj ' + this.counter.toString();
+        button2.textContent = 'kasuj ';
         div.appendChild(title);
         div.appendChild(div2);
         div2.appendChild(quest);
@@ -588,7 +582,6 @@ var HomePage = /** @class */ (function () {
         div2.appendChild(radio2);
         div2.appendChild(answerC);
         div2.appendChild(radio3);
-        div2.appendChild(button1);
         div2.appendChild(button2);
         var popup = new __WEBPACK_IMPORTED_MODULE_3_mapbox_gl__["Popup"]({ offset: 25 })
             .setDOMContent(div); // add popups
@@ -730,24 +723,23 @@ var HomePage = /** @class */ (function () {
         this.directions.onRemove(this.map);
     };
     HomePage.prototype.ClearMap = function () {
-        //this.directions.removeRoutes();
-        this.map.removeLayer('start');
-        this.map.removeLayer('route');
-        this.map.removeLayer('end');
-        this.map.removeSource('start');
-        this.map.removeSource('route');
-        this.map.removeSource('end');
-        this.markersPath.map(function (x) { return x.remove(); });
-        this.markersPath = [];
-        this.buttonsArray = [];
-        this.questsArray = [];
+        if (this.markersPath.length > 1) {
+            this.map.removeLayer('start');
+            this.map.removeLayer('route');
+            this.map.removeLayer('end');
+            this.map.removeSource('start');
+            this.map.removeSource('route');
+            this.map.removeSource('end');
+            this.markersPath.map(function (x) { return x.remove(); });
+            this.markersPath = [];
+            this.buttonsArray = [];
+            this.questsArray = [];
+        }
     };
     HomePage.prototype.changeTextColor = function () {
         __WEBPACK_IMPORTED_MODULE_6_jquery__('#myButton').text('white');
     };
     HomePage.prototype.SendPath = function () {
-        console.log(this.questsArray);
-        console.log(this.questsArray[0].input);
         var tasks = Array();
         this.questsArray.forEach(function (element) {
             tasks.push(new Task(element[0].value, element[1].value, element[2].checked, element[3].value, element[4].checked, element[5].value, element[6].checked));
@@ -762,6 +754,7 @@ var HomePage = /** @class */ (function () {
         }, { responseType: 'text' }).subscribe(function (res) {
             console.log(JSON.stringify(res));
         });
+        this.ClearMap();
     };
     __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_9" /* ViewChild */])('map'),
@@ -769,7 +762,7 @@ var HomePage = /** @class */ (function () {
     ], HomePage.prototype, "mapContainer", void 0);
     HomePage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-home',template:/*ion-inline-start:"C:\Users\Ja\Dysk Google\Aplikacje Mobilne\mapbox\myApp\src\pages\home\home.html"*/'<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Stworz gre</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n  <h3>Ionic Menu Starter</h3>\n\n <button ion-button>a</button>\n\n\n    <mat-form-field class="example-full-width">\n      <textarea [(ngModel)]="gameName" matInput placeholder="Nazwa gry"></textarea>\n    </mat-form-field>\n \n  <div id="map" ></div>\n\n\n  <button (click)="SendPath()">Wyślij</button>\n  <button (click)="BackToStart()">Toggle Menu</button>\n  <button (click)="ClearMap()">Clear Map</button>\n  <button id="myButton" (click)="changeTextColor()">Click Me!</button>\n\n</ion-content>\n\n\n\n'/*ion-inline-end:"C:\Users\Ja\Dysk Google\Aplikacje Mobilne\mapbox\myApp\src\pages\home\home.html"*/,
+            selector: 'page-home',template:/*ion-inline-start:"C:\Users\Ja\Dysk Google\Aplikacje Mobilne\mapbox\myApp\src\pages\home\home.html"*/'<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Stworz gre</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content  padding>\n  <h3>Ionic Menu Starter</h3>\n\n\n\n <ion-item>\n  <ion-label color="primary">Nazwa gry</ion-label>\n  <ion-input [(ngModel)]="gameName" placeholder="Text Input"></ion-input>\n</ion-item>\n\n \n  <div id="map" ></div>\n\n\n  <button ion-button color="secondary" (click)="SendPath()" small round>Round Button</button>\n  <button ion-button color="warning" (click)="ClearMap()">Clear Map</button>\n\n</ion-content>\n\n\n\n'/*ion-inline-end:"C:\Users\Ja\Dysk Google\Aplikacje Mobilne\mapbox\myApp\src\pages\home\home.html"*/,
         }),
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["B" /* Injectable */])(),
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["E" /* Input */])(),
