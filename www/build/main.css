@@ -28022,6 +28022,11 @@ input[type="radio"] {
   width: 100%;
 }
 
+.container-button {
+  margin: 0px auto;
+  text-align: center;
+}
+
 #map {
   height: 400px;
   width: 100%;
@@ -28078,7 +28083,7 @@ mat-list-item:first-child {
   text-align: center;
 }
 
-.button-md {
+.button-start {
   font-size: 34px;
   height: 80px;
   padding: 10px;

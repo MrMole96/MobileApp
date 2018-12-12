@@ -8,22 +8,19 @@
 </ion-header>
 
 <ion-content  padding>
-  <h3>Ionic Menu Starter</h3>
-
-
-
+<!--Dodac gdzies dystans zeby sie pokazywal-->
  <ion-item>
-  <ion-label color="primary">Nazwa gry</ion-label>
+  <!-- <ion-label color="primary">Nazwa gry</ion-label> -->
   <ion-input [(ngModel)]="gameName" placeholder="Text Input"></ion-input>
 </ion-item>
 
  
   <div id="map" ></div>
 
-
-  <button ion-button color="secondary" (click)="SendPath()" small round>Round Button</button>
-  <button ion-button color="warning" (click)="ClearMap()">Clear Map</button>
-
+  <div class="container-button">
+  <button ion-button color="secondary" (click)="SendPath()"  round>Wyslij</button>
+  <button ion-button color="warning" (click)="ClearMap()" round>Wyczysc</button>
+</div>
 </ion-content>
 
 
