@@ -10,14 +10,13 @@
 <ion-content padding>
 
   <h2>{{information}}</h2>
-  <mat-list>
-    <mat-list-item> Pepper </mat-list-item>
-    <mat-list-item> Salt </mat-list-item>
-    <mat-list-item> Paprika </mat-list-item>
-  </mat-list>
-<mat-list *ngFor="let path of loadedPath; let i = index" (click)="loadPath(i)">
-<mat-list-item >{{path.distance}}</mat-list-item>
-<mat-list-item >{{path.name}}</mat-list-item>
-</mat-list>
+<ul class="games" *ngFor="let path of loadedPath; let i = index" (click)="loadPath(i)">
+    
+    
+<li>{{path.name}}</li>    
+<li ><ion-icon name="walk"></ion-icon>{{path.distance}}</li>
+
+<li><ion-icon name="trophy"></ion-icon>{{tasks}}</li>
+</ul>
 
 </ion-content>

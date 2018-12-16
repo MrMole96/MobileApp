@@ -1,10 +1,11 @@
-mat-list{
-    border: 2px solid red;
+.games{
+    border: 2px solid #488aff;
+    border-radius: 10px;
 }
-mat-list-item{
+.games > li{
     font-size: 25px;
 }
-mat-list-item:first-child{
+.game > li:first-child{
     text-align: center;
     display: inline;
 }

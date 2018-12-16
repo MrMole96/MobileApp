@@ -28027,6 +28027,14 @@ input[type="radio"] {
   text-align: center;
 }
 
+.no-scroll .scroll-content {
+  overflow: hidden;
+}
+
+.item {
+  padding: 5px;
+}
+
 #map {
   height: 400px;
   width: 100%;
@@ -28065,15 +28073,16 @@ input[type="radio"] {
   margin: 5px;
 }
 
-mat-list {
-  border: 2px solid red;
+.games {
+  border: 2px solid #488aff;
+  border-radius: 10px;
 }
 
-mat-list-item {
+.games > li {
   font-size: 25px;
 }
 
-mat-list-item:first-child {
+.game > li:first-child {
   text-align: center;
   display: inline;
 }

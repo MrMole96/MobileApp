@@ -15,6 +15,12 @@
     
     text-align: center;
 }
+.no-scroll .scroll-content{
+  overflow: hidden;
+}
+.item{
+  padding: 5px;
+}
 #map { height: 400px;
 width: 100%; }
 #marker{

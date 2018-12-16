@@ -1,6 +1,7 @@
 import { Component, ElementRef, ViewChild, OnInit, Injectable, Input } from '@angular/core';
 import { NavController, Config } from 'ionic-angular';
 import { HttpClient } from '@angular/common/http';
+import { AlertController } from 'ionic-angular';
 import * as mapboxgl from 'mapbox-gl';
 import * as MapboxDirections from '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions';
 import * as MapboxGeocoder from '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.min.js';
@@ -24,10 +25,10 @@ export class HomePage implements OnInit {
   index = 0;
   distance: number;
   marker: mapboxgl.Marker;
-  lat = 37.75;
-  lng = -122.41;
+  lat = 49.86;
+  lng = 19.35;
   markersPath: mapboxgl.Marker[] = []
-  gameName: any;
+  gameName: string = "";
   startLane: any;
   pathLane: any;
   finishLane: any;
@@ -48,7 +49,7 @@ export class HomePage implements OnInit {
   buttonsArray: Array<any> = [];
   questsArray: Array<any> = [];
   counter = 0
-  constructor(public navCtrl: NavController, public http: HttpClient) {
+  constructor(public navCtrl: NavController, public http: HttpClient, public alertCtrl: AlertController) {
     //mapboxgl.accessToken = 'pk.eyJ1Ijoicmlja2NhcmRkZGQiLCJhIjoiY2puYWd4cTU3MGc3azNycDh3dnllNWNtZyJ9.MTH5zn5hLiXz9jBvGadOVQ'
     Object.getOwnPropertyDescriptor(mapboxgl, "accessToken").set('pk.eyJ1Ijoicmlja2NhcmRkZGQiLCJhIjoiY2puYWd4cTU3MGc3azNycDh3dnllNWNtZyJ9.MTH5zn5hLiXz9jBvGadOVQ');
 
@@ -56,7 +57,7 @@ export class HomePage implements OnInit {
   }
 
   ngOnInit() {
-    // this.markers = this.mapService.getMarkers()
+    //this.markers = this.mapService.getMarkers()
     this.initializeMap()
   }
 
@@ -86,25 +87,15 @@ export class HomePage implements OnInit {
       doubleClickZoom: false,
       center: [this.lng, this.lat]
     });
-    var nav = new mapboxgl.NavigationControl();
-    // this.map.addControl(nav, 'top-left');
-    // this.map.on('click', (event) => {
-    //   //event.preventDefault();
-    //   //const coordinates = [event.lngLat.lng, event.lngLat.lat];
-    //   console.log(event);
-    //   this.index++;
-    //   this.directions.addWaypoint(this.index, [event.lngLat.lng, event.lngLat.lat]);
-    //   this.addMarker(event);
-    //   console.log(this.directions.getWaypoints());
-    // })
 
     this.map.on('click', this.addMarker.bind(this));
-    //this.getRoute();
-    //this.map.on('load', this.getRoute.bind(this));
-    //this.map.addControl(this.directions, 'top-left');
-    this.map.addControl(this.geocoder);
-    // this.map.on('load', this.updateGeocoderProximity.bind(this)); // set proximity on map load
-    //this.map.on('moveend', this.updateGeocoderProximity.bind(this)); // and then update proximity each time the map moves
+    this.map.addControl(new mapboxgl.GeolocateControl({
+      positionOptions: {
+          enableHighAccuracy: true
+      },
+      trackUserLocation: true
+  }));
+
 
   }
   createPopUp(event: any) {
@@ -314,6 +305,7 @@ export class HomePage implements OnInit {
     if (this.map.getZoom() > 9) {
       var center = this.map.getCenter().wrap(); // ensures the longitude falls within -180 to 180 as the Geocoding API doesn't accept values outside this range
       this.geocoder.setProximity({ longitude: center.lng, latitude: center.lat });
+      
     } else {
       this.geocoder.setProximity(null);
     }
@@ -345,7 +337,9 @@ export class HomePage implements OnInit {
   }
 
   SendPath() {
-
+console.log(this.gameName);
+if(this.gameName.trim().length !=0)
+{
     let tasks = Array<Task>();
     this.questsArray.forEach(element => {
       tasks.push(new Task(element[0].value, element[1].value, element[2].checked, element[3].value, element[4].checked, element[5].value, element[6].checked));
@@ -362,9 +356,18 @@ export class HomePage implements OnInit {
     });
 
     this.ClearMap();
+  }else this.warningAlert();
+  
 
   }
-
+  warningAlert() {
+    let alert = this.alertCtrl.create({
+      title: 'Uwaga!',
+      subTitle: 'Podaj nazwe gry!',
+      buttons: ['Dismiss']
+    });
+    alert.present();
+  }
 }
 class Task {
   quest: string;

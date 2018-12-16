@@ -13,6 +13,7 @@ import { StartMenuComponent } from '../pages/startmenu/startMenu';
 import { HttpClientModule} from '@angular/common/http';
 import { LoadGameComponent } from '../pages/loadgame/loadgame';
 import { GameComponent } from '../pages/game/game';
+
 @NgModule({
   declarations: [
     MyApp,
@@ -28,7 +29,9 @@ import { GameComponent } from '../pages/game/game';
     MatListModule,
     MatInputModule,
     MatFormFieldModule,
+    
     IonicModule.forRoot(MyApp),
+  
  
   ],
   bootstrap: [IonicApp],

@@ -1,6 +1,6 @@
 webpackJsonp([0],{
 
-/***/ 146:
+/***/ 221:
 /***/ (function(module, exports) {
 
 function webpackEmptyAsyncContext(req) {
@@ -13,11 +13,11 @@ function webpackEmptyAsyncContext(req) {
 webpackEmptyAsyncContext.keys = function() { return []; };
 webpackEmptyAsyncContext.resolve = webpackEmptyAsyncContext;
 module.exports = webpackEmptyAsyncContext;
-webpackEmptyAsyncContext.id = 146;
+webpackEmptyAsyncContext.id = 221;
 
 /***/ }),
 
-/***/ 190:
+/***/ 263:
 /***/ (function(module, exports) {
 
 function webpackEmptyAsyncContext(req) {
@@ -30,19 +30,19 @@ function webpackEmptyAsyncContext(req) {
 webpackEmptyAsyncContext.keys = function() { return []; };
 webpackEmptyAsyncContext.resolve = webpackEmptyAsyncContext;
 module.exports = webpackEmptyAsyncContext;
-webpackEmptyAsyncContext.id = 190;
+webpackEmptyAsyncContext.id = 263;
 
 /***/ }),
 
-/***/ 238:
+/***/ 310:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return StartMenuComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(59);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__loadgame_loadgame__ = __webpack_require__(239);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__home_home__ = __webpack_require__(242);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(76);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__loadgame_loadgame__ = __webpack_require__(311);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__home_home__ = __webpack_require__(316);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -71,7 +71,7 @@ var StartMenuComponent = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'app-start',template:/*ion-inline-start:"C:\Users\Ja\Dysk Google\Aplikacje Mobilne\mapbox\myApp\src\pages\startmenu\startMenu.html"*/'<div class="container">\n    <button class="button-start" (click)="GoToCreateGame()" ion-button icon-start>\n        <ion-icon name=\'home\' ></ion-icon>\n        Stworz gre\n      </button>\n      <button class="button-start" (click)="GoToLoadGame()" ion-button outline icon-start>\n        <ion-icon name=\'briefcase\' is-active="false"></ion-icon>\n        Wczytaj gre\n      </button>\n</div>'/*ion-inline-end:"C:\Users\Ja\Dysk Google\Aplikacje Mobilne\mapbox\myApp\src\pages\startmenu\startMenu.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* NavController */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* NavController */]])
     ], StartMenuComponent);
     return StartMenuComponent;
 }());
@@ -80,15 +80,15 @@ var StartMenuComponent = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 239:
+/***/ 311:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LoadGameComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(59);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_common_http__ = __webpack_require__(66);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__game_game__ = __webpack_require__(240);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(76);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_common_http__ = __webpack_require__(89);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__game_game__ = __webpack_require__(314);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -157,9 +157,9 @@ var LoadGameComponent = /** @class */ (function () {
     };
     LoadGameComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'app-load',template:/*ion-inline-start:"C:\Users\Ja\Dysk Google\Aplikacje Mobilne\mapbox\myApp\src\pages\loadgame\loadgame.html"*/'<ion-header>\n\n  <ion-navbar>\n\n    <button ion-button menuToggle>\n\n      <ion-icon name="menu"></ion-icon>\n\n    </button>\n\n    <ion-title>Wczytaj gre</ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content padding>\n\n\n\n  <h2>{{information}}</h2>\n\n  <mat-list>\n\n    <mat-list-item> Pepper </mat-list-item>\n\n    <mat-list-item> Salt </mat-list-item>\n\n    <mat-list-item> Paprika </mat-list-item>\n\n  </mat-list>\n\n<mat-list *ngFor="let path of loadedPath; let i = index" (click)="loadPath(i)">\n\n<mat-list-item >{{path.distance}}</mat-list-item>\n\n<mat-list-item >{{path.name}}</mat-list-item>\n\n</mat-list>\n\n\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\Ja\Dysk Google\Aplikacje Mobilne\mapbox\myApp\src\pages\loadgame\loadgame.html"*/,
+            selector: 'app-load',template:/*ion-inline-start:"C:\Users\Ja\Dysk Google\Aplikacje Mobilne\mapbox\myApp\src\pages\loadgame\loadgame.html"*/'<ion-header>\n\n  <ion-navbar>\n\n    <button ion-button menuToggle>\n\n      <ion-icon name="menu"></ion-icon>\n\n    </button>\n\n    <ion-title>Wczytaj gre</ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content padding>\n\n\n\n  <h2>{{information}}</h2>\n\n<ul class="games" *ngFor="let path of loadedPath; let i = index" (click)="loadPath(i)">\n\n    \n\n    \n\n<li>{{path.name}}</li>    \n\n<li ><ion-icon name="walk"></ion-icon>{{path.distance}}</li>\n\n\n\n<li><ion-icon name="trophy"></ion-icon>{{tasks}}</li>\n\n</ul>\n\n\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\Ja\Dysk Google\Aplikacje Mobilne\mapbox\myApp\src\pages\loadgame\loadgame.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* NavController */], __WEBPACK_IMPORTED_MODULE_2__angular_common_http__["a" /* HttpClient */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* NavController */], __WEBPACK_IMPORTED_MODULE_2__angular_common_http__["a" /* HttpClient */]])
     ], LoadGameComponent);
     return LoadGameComponent;
 }());
@@ -168,15 +168,15 @@ var LoadGameComponent = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 240:
+/***/ 314:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return GameComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_mapbox_gl__ = __webpack_require__(241);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_mapbox_gl__ = __webpack_require__(315);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_mapbox_gl___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_mapbox_gl__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_common_http__ = __webpack_require__(66);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_common_http__ = __webpack_require__(89);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -432,21 +432,21 @@ var GameComponent = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 242:
+/***/ 316:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HomePage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(59);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_common_http__ = __webpack_require__(66);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_mapbox_gl__ = __webpack_require__(241);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(76);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_common_http__ = __webpack_require__(89);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_mapbox_gl__ = __webpack_require__(315);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_mapbox_gl___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_mapbox_gl__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__mapbox_mapbox_gl_directions_dist_mapbox_gl_directions__ = __webpack_require__(330);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__mapbox_mapbox_gl_directions_dist_mapbox_gl_directions__ = __webpack_require__(511);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__mapbox_mapbox_gl_directions_dist_mapbox_gl_directions___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__mapbox_mapbox_gl_directions_dist_mapbox_gl_directions__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__mapbox_mapbox_gl_geocoder_dist_mapbox_gl_geocoder_min_js__ = __webpack_require__(331);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__mapbox_mapbox_gl_geocoder_dist_mapbox_gl_geocoder_min_js__ = __webpack_require__(512);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__mapbox_mapbox_gl_geocoder_dist_mapbox_gl_geocoder_min_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__mapbox_mapbox_gl_geocoder_dist_mapbox_gl_geocoder_min_js__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_jquery__ = __webpack_require__(332);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_jquery__ = __webpack_require__(513);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_jquery__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -464,19 +464,22 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 // interface markersType
 // {
 //   lng: number,
 //   lat: number
 // }
 var HomePage = /** @class */ (function () {
-    function HomePage(navCtrl, http) {
+    function HomePage(navCtrl, http, alertCtrl) {
         this.navCtrl = navCtrl;
         this.http = http;
+        this.alertCtrl = alertCtrl;
         this.index = 0;
-        this.lat = 37.75;
-        this.lng = -122.41;
+        this.lat = 49.86;
+        this.lng = 19.35;
         this.markersPath = [];
+        this.gameName = "";
         this.directions = new __WEBPACK_IMPORTED_MODULE_4__mapbox_mapbox_gl_directions_dist_mapbox_gl_directions__({
             accessToken: 'pk.eyJ1Ijoicmlja2NhcmRkZGQiLCJhIjoiY2puYWd4cTU3MGc3azNycDh3dnllNWNtZyJ9.MTH5zn5hLiXz9jBvGadOVQ',
             unit: 'metric',
@@ -496,7 +499,7 @@ var HomePage = /** @class */ (function () {
         Object.getOwnPropertyDescriptor(__WEBPACK_IMPORTED_MODULE_3_mapbox_gl__, "accessToken").set('pk.eyJ1Ijoicmlja2NhcmRkZGQiLCJhIjoiY2puYWd4cTU3MGc3azNycDh3dnllNWNtZyJ9.MTH5zn5hLiXz9jBvGadOVQ');
     }
     HomePage.prototype.ngOnInit = function () {
-        // this.markers = this.mapService.getMarkers()
+        //this.markers = this.mapService.getMarkers()
         this.initializeMap();
     };
     HomePage.prototype.initializeMap = function () {
@@ -520,24 +523,13 @@ var HomePage = /** @class */ (function () {
             doubleClickZoom: false,
             center: [this.lng, this.lat]
         });
-        var nav = new __WEBPACK_IMPORTED_MODULE_3_mapbox_gl__["NavigationControl"]();
-        // this.map.addControl(nav, 'top-left');
-        // this.map.on('click', (event) => {
-        //   //event.preventDefault();
-        //   //const coordinates = [event.lngLat.lng, event.lngLat.lat];
-        //   console.log(event);
-        //   this.index++;
-        //   this.directions.addWaypoint(this.index, [event.lngLat.lng, event.lngLat.lat]);
-        //   this.addMarker(event);
-        //   console.log(this.directions.getWaypoints());
-        // })
         this.map.on('click', this.addMarker.bind(this));
-        //this.getRoute();
-        //this.map.on('load', this.getRoute.bind(this));
-        //this.map.addControl(this.directions, 'top-left');
-        this.map.addControl(this.geocoder);
-        // this.map.on('load', this.updateGeocoderProximity.bind(this)); // set proximity on map load
-        //this.map.on('moveend', this.updateGeocoderProximity.bind(this)); // and then update proximity each time the map moves
+        this.map.addControl(new __WEBPACK_IMPORTED_MODULE_3_mapbox_gl__["GeolocateControl"]({
+            positionOptions: {
+                enableHighAccuracy: true
+            },
+            trackUserLocation: true
+        }));
     };
     HomePage.prototype.createPopUp = function (event) {
         var div = document.createElement('div');
@@ -740,35 +732,49 @@ var HomePage = /** @class */ (function () {
         __WEBPACK_IMPORTED_MODULE_6_jquery__('#myButton').text('white');
     };
     HomePage.prototype.SendPath = function () {
-        var tasks = Array();
-        this.questsArray.forEach(function (element) {
-            tasks.push(new Task(element[0].value, element[1].value, element[2].checked, element[3].value, element[4].checked, element[5].value, element[6].checked));
+        console.log(this.gameName);
+        if (this.gameName.trim().length != 0) {
+            var tasks_1 = Array();
+            this.questsArray.forEach(function (element) {
+                tasks_1.push(new Task(element[0].value, element[1].value, element[2].checked, element[3].value, element[4].checked, element[5].value, element[6].checked));
+            });
+            console.log(tasks_1);
+            this.http.post('http://127.0.0.1:3456/', {
+                info: 'sent request',
+                Tasks: tasks_1,
+                totalDistance: this.distance,
+                gameName: this.gameName,
+                MarkersPath: this.markersPath.map(function (x) { return x.getLngLat(); })
+            }, { responseType: 'text' }).subscribe(function (res) {
+                console.log(JSON.stringify(res));
+            });
+            this.ClearMap();
+        }
+        else
+            this.warningAlert();
+    };
+    HomePage.prototype.warningAlert = function () {
+        var alert = this.alertCtrl.create({
+            title: 'Uwaga!',
+            subTitle: 'Podaj nazwe gry!',
+            buttons: ['Dismiss']
         });
-        console.log(tasks);
-        this.http.post('http://127.0.0.1:3456/', {
-            info: 'sent request',
-            Tasks: tasks,
-            totalDistance: this.distance,
-            gameName: this.gameName,
-            MarkersPath: this.markersPath.map(function (x) { return x.getLngLat(); })
-        }, { responseType: 'text' }).subscribe(function (res) {
-            console.log(JSON.stringify(res));
-        });
-        this.ClearMap();
+        alert.present();
     };
     __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_9" /* ViewChild */])('map'),
-        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["t" /* ElementRef */])
+        __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["t" /* ElementRef */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["t" /* ElementRef */]) === "function" && _a || Object)
     ], HomePage.prototype, "mapContainer", void 0);
     HomePage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-home',template:/*ion-inline-start:"C:\Users\Ja\Dysk Google\Aplikacje Mobilne\mapbox\myApp\src\pages\home\home.html"*/'<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Stworz gre</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content  padding>\n<!--Dodac gdzies dystans zeby sie pokazywal-->\n <ion-item>\n  <!-- <ion-label color="primary">Nazwa gry</ion-label> -->\n  <ion-input [(ngModel)]="gameName" placeholder="Text Input"></ion-input>\n</ion-item>\n\n \n  <div id="map" ></div>\n\n  <div class="container-button">\n  <button ion-button color="secondary" (click)="SendPath()"  round>Wyslij</button>\n  <button ion-button color="warning" (click)="ClearMap()" round>Wyczysc</button>\n</div>\n</ion-content>\n\n\n\n'/*ion-inline-end:"C:\Users\Ja\Dysk Google\Aplikacje Mobilne\mapbox\myApp\src\pages\home\home.html"*/,
+            selector: 'page-home',template:/*ion-inline-start:"C:\Users\Ja\Dysk Google\Aplikacje Mobilne\mapbox\myApp\src\pages\home\home.html"*/'<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Stworz gre</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content  class="no-scroll" padding>\n<!--Dodac gdzies dystans zeby sie pokazywal-->\n <ion-item>\n  <!-- <ion-label color="primary">Nazwa gry</ion-label> -->\n  <ion-input class="nameGame" [(ngModel)]="gameName" placeholder="Nazwa gry"></ion-input>\n</ion-item>\n\n \n  <div id="map" ></div>\n\n  <div class="container-button">\n  <button ion-button color="secondary" (click)="SendPath()"  round>Wyslij</button>\n  <button ion-button color="warning" (click)="ClearMap()" round>Wyczysc</button>\n</div>\n</ion-content>\n\n\n\n'/*ion-inline-end:"C:\Users\Ja\Dysk Google\Aplikacje Mobilne\mapbox\myApp\src\pages\home\home.html"*/,
         }),
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["B" /* Injectable */])(),
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["E" /* Input */])(),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* NavController */], __WEBPACK_IMPORTED_MODULE_2__angular_common_http__["a" /* HttpClient */]])
+        __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* NavController */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__angular_common_http__["a" /* HttpClient */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_common_http__["a" /* HttpClient */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */]) === "function" && _d || Object])
     ], HomePage);
     return HomePage;
+    var _a, _b, _c, _d;
 }());
 
 var Task = /** @class */ (function () {
@@ -790,13 +796,13 @@ var Task = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 252:
+/***/ 456:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__ = __webpack_require__(253);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_module__ = __webpack_require__(265);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__ = __webpack_require__(457);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_module__ = __webpack_require__(461);
 
 
 Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* platformBrowserDynamic */])().bootstrapModule(__WEBPACK_IMPORTED_MODULE_1__app_module__["a" /* AppModule */]);
@@ -804,32 +810,36 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 
 /***/ }),
 
-/***/ 265:
+/***/ 461:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppModule; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__ = __webpack_require__(28);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__ = __webpack_require__(39);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(59);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_platform_browser_animations__ = __webpack_require__(303);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_material_input__ = __webpack_require__(130);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__angular_material_form_field__ = __webpack_require__(52);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__app_component__ = __webpack_require__(322);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_home_home__ = __webpack_require__(242);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__angular_material__ = __webpack_require__(333);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__ionic_native_status_bar__ = __webpack_require__(233);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__ionic_native_splash_screen__ = __webpack_require__(237);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__pages_startmenu_startMenu__ = __webpack_require__(238);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__angular_common_http__ = __webpack_require__(66);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__pages_loadgame_loadgame__ = __webpack_require__(239);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__pages_game_game__ = __webpack_require__(240);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(76);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_platform_browser_animations__ = __webpack_require__(498);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_material_input__ = __webpack_require__(176);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__angular_material_form_field__ = __webpack_require__(66);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__app_component__ = __webpack_require__(506);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_home_home__ = __webpack_require__(316);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__angular_material__ = __webpack_require__(514);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__ionic_native_status_bar__ = __webpack_require__(306);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__ionic_native_splash_screen__ = __webpack_require__(309);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__pages_startmenu_startMenu__ = __webpack_require__(310);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__angular_common_http__ = __webpack_require__(89);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__pages_loadgame_loadgame__ = __webpack_require__(311);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__pages_game_game__ = __webpack_require__(314);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__ng_bootstrap_ng_bootstrap__ = __webpack_require__(542);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16_ngx_bootstrap__ = __webpack_require__(814);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
+
 
 
 
@@ -858,17 +868,19 @@ var AppModule = /** @class */ (function () {
                 __WEBPACK_IMPORTED_MODULE_13__pages_loadgame_loadgame__["a" /* LoadGameComponent */],
             ],
             imports: [
+                __WEBPACK_IMPORTED_MODULE_16_ngx_bootstrap__["a" /* AlertModule */].forRoot(),
                 __WEBPACK_IMPORTED_MODULE_3__angular_platform_browser_animations__["a" /* BrowserAnimationsModule */],
                 __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */],
                 __WEBPACK_IMPORTED_MODULE_12__angular_common_http__["b" /* HttpClientModule */],
                 __WEBPACK_IMPORTED_MODULE_8__angular_material__["a" /* MatListModule */],
                 __WEBPACK_IMPORTED_MODULE_4__angular_material_input__["b" /* MatInputModule */],
                 __WEBPACK_IMPORTED_MODULE_5__angular_material_form_field__["c" /* MatFormFieldModule */],
-                __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["c" /* IonicModule */].forRoot(__WEBPACK_IMPORTED_MODULE_6__app_component__["a" /* MyApp */], {}, {
+                __WEBPACK_IMPORTED_MODULE_15__ng_bootstrap_ng_bootstrap__["a" /* NgbModule */].forRoot(),
+                __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["d" /* IonicModule */].forRoot(__WEBPACK_IMPORTED_MODULE_6__app_component__["a" /* MyApp */], {}, {
                     links: []
                 }),
             ],
-            bootstrap: [__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["a" /* IonicApp */]],
+            bootstrap: [__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["b" /* IonicApp */]],
             entryComponents: [
                 __WEBPACK_IMPORTED_MODULE_6__app_component__["a" /* MyApp */],
                 __WEBPACK_IMPORTED_MODULE_7__pages_home_home__["a" /* HomePage */],
@@ -880,7 +892,7 @@ var AppModule = /** @class */ (function () {
                 __WEBPACK_IMPORTED_MODULE_9__ionic_native_status_bar__["a" /* StatusBar */],
                 __WEBPACK_IMPORTED_MODULE_10__ionic_native_splash_screen__["a" /* SplashScreen */],
                 __WEBPACK_IMPORTED_MODULE_12__angular_common_http__["b" /* HttpClientModule */],
-                { provide: __WEBPACK_IMPORTED_MODULE_1__angular_core__["v" /* ErrorHandler */], useClass: __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["b" /* IonicErrorHandler */] }
+                { provide: __WEBPACK_IMPORTED_MODULE_1__angular_core__["v" /* ErrorHandler */], useClass: __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["c" /* IonicErrorHandler */] }
             ]
         })
     ], AppModule);
@@ -891,16 +903,16 @@ var AppModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 322:
+/***/ 506:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MyApp; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(59);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__ = __webpack_require__(233);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(237);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_startmenu_startMenu__ = __webpack_require__(238);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(76);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__ = __webpack_require__(306);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(309);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_startmenu_startMenu__ = __webpack_require__(310);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -928,7 +940,7 @@ var MyApp = /** @class */ (function () {
     MyApp = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({template:/*ion-inline-start:"C:\Users\Ja\Dysk Google\Aplikacje Mobilne\mapbox\myApp\src\app\app.html"*/'<ion-nav [root]="rootPage"></ion-nav>'/*ion-inline-end:"C:\Users\Ja\Dysk Google\Aplikacje Mobilne\mapbox\myApp\src\app\app.html"*/
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* Platform */], __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */], __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* Platform */], __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */], __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */]])
     ], MyApp);
     return MyApp;
 }());
@@ -937,5 +949,5 @@ var MyApp = /** @class */ (function () {
 
 /***/ })
 
-},[252]);
+},[456]);
 //# sourceMappingURL=main.js.map
