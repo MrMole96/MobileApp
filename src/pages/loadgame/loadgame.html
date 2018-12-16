@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Wczytaj gre</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+  <h2>{{information}}</h2>
+<ul class="games" *ngFor="let path of loadedPath; let i = index" (click)="loadPath(i)">
+    
+    
+<li>{{path.name}}</li>    
+<li ><ion-icon name="walk"></ion-icon>{{path.distance}}</li>
+
+<li><ion-icon name="trophy"></ion-icon>{{tasks}}</li>
+</ul>
+
+</ion-content>

@@ -7,18 +7,21 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  <h3>Ionic Menu Starter</h3>
+<ion-content  class="no-scroll" padding>
+<!--Dodac gdzies dystans zeby sie pokazywal-->
+ <ion-item>
+  <!-- <ion-label color="primary">Nazwa gry</ion-label> -->
+  <ion-input class="nameGame" [(ngModel)]="gameName" placeholder="Nazwa gry"></ion-input>
+</ion-item>
 
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will show you the way.
-  </p>
+ 
+  <div id="map" ></div>
 
-  <h4>Ogolny dystans trasy to około {{distanceString}}</h4>
-  <div id="map"></div>
-
-
-  <button (click)="SendPath()">Wyślij</button>
-  <button (click)="BackToStart()">Toggle Menu</button>
+  <div class="container-button">
+  <button ion-button color="secondary" (click)="SendPath()"  round>Wyslij</button>
+  <button ion-button color="warning" (click)="ClearMap()" round>Wyczysc</button>
+</div>
 </ion-content>
+
+
 

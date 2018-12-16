@@ -1,0 +1,11 @@
+.games{
+    border: 2px solid #488aff;
+    border-radius: 10px;
+}
+.games > li{
+    font-size: 25px;
+}
+.game > li:first-child{
+    text-align: center;
+    display: inline;
+}
